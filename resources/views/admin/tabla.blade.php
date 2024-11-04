@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
- 
+
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -40,30 +40,7 @@
 
 <body>
     <div class="col-lg-8 col-md-6 mb-md-0 mb-4" id="tablita">
-        {{-- <div class="card">
-          <div class="card-header pb-0">
-            <div class="row">
-              <div class="col-lg-6 col-7">
-                <h6>Pedidos</h6>
-                <p class="text-sm mb-0">
-                  <i class="fa fa-check text-info" aria-hidden="true"></i>
-                  <span class="font-weight-bold ms-1">0 cmpletados</span> 
-                </p>
-              </div>
-              <div class="col-lg-6 col-5 my-auto text-end">
-                <div class="dropdown float-lg-end pe-4">
-                  <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-ellipsis-v text-secondary"></i>
-                  </a>
-                  <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
-                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                  </ul> 
-                </div>
-              </div>
-            </div>
-          </div> --}}
+
           <div class="card-body px-0 pb-2">
             <div class="table-responsive">
               <table class="table align-items-center mb-0">
@@ -76,60 +53,56 @@
                   </tr>
                 </thead>
                 <tbody>
-                    @foreach ($ordenes as $orden)
-                        
-                   
-                  <tr>
-                    {{-- <td>
-                      <div class="d-flex px-2 py-1">
-                        <div>
-                          <img src="assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm me-3" alt="xd">
-                        </div>
-                        <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">Soft UI XD Version</h6>
-                        </div>
-                      </div>
-                    </td> --}}
-                    <td>
-                      <div class="avatar-group mt-2">
-                       @php
-                           $detalles=$orden_detalles->where('id_orden',$orden->id);
-                       @endphp
-                            
-                       
-                        @foreach ($detalles as $detalle)
-                            
-                        
-                        <a href="{{route('detalles','id='.$detalle->producto->id.'')}}" target="_parent" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$detalle->producto->nombre}}">
-                          <img src="{{$detalle->producto->foto}}" alt="{{$detalle->producto->nombre}}" style="width: 30px; height: 30px;">
-                        </a>
-                       
-                        @endforeach
-                      </div>
-                    </td>
-                    <td class="align-middle text-center text-sm">
-                      <span class="text-xs font-weight-bold"> ${{$orden->total}} </span>
-                    </td>
-                    <td class="align-middle">
-                      <div class="progress-wrapper w-75 mx-auto">
-                        <div class="progress-info">
-                          <div class="progress-percentage">
-                            <span class="text-xs font-weight-bold">{{$orden->estado}}</span>
-                          </div>
-                        </div>
-                        <div class="progress">
-                            @if ($orden->estado=='Procesando')
-                            <div class="progress-bar bg-gradient-info w-40" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                            @elseif ($orden->estado=='Completado')
-                            <div class="progress-bar bg-gradient-success w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div> 
-                            @endif
-                          
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  @endforeach
-                  
+                @foreach ($ordenes as $orden)
+                    <tr>
+                        <td>
+                            <div class="avatar-group mt-2">
+                                @foreach ($orden->ordersDetails as $detalle)
+                                    @if ($detalle->producto) <!-- Verifica si producto no es null -->
+                                    <a href="{{ route('detalles', ['id' => $detalle->producto->id]) }}" target="_parent"
+                                       class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
+                                       data-bs-placement="bottom" title="{{ $detalle->producto->nombre }}">
+                                        <img src="{{ $detalle->producto->foto }}" alt="{{ $detalle->producto->nombre }}"
+                                             style="width: 30px; height: 30px;">
+                                    </a>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </td>
+
+                        <td class="align-middle text-center text-sm">
+                            <span class="text-xs font-weight-bold"> ${{ $orden->total }} </span>
+                        </td>
+
+                        <td class="align-middle">
+                            <div class="progress-wrapper w-75 mx-auto">
+                                <div class="progress-info">
+                                    <div class="progress-percentage">
+                                        <span class="text-xs font-weight-bold">{{ $orden->estado }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="progress">
+                                    @php
+                                        // Determina el ancho de la barra de progreso en función del estado
+                                        $progressWidth = match($orden->estado) {
+                                            'Procesando' => '40%',
+                                            'Completado' => '100%',
+                                            default => '0%'
+                                        };
+                                        $progressClass = $orden->estado === 'Completado' ? 'bg-gradient-success' : 'bg-gradient-info';
+                                    @endphp
+
+                                    <div class="progress-bar {{ $progressClass }} w-{{ $progressWidth }}" role="progressbar"
+                                         aria-valuenow="{{ trim($progressWidth, '%') }}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+
+
                 </tbody>
               </table>
             </div>
@@ -327,4 +300,4 @@ if (win && document.querySelector('#sidenav-scrollbar')) {
 <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="assets/pedidos/js/soft-ui-dashboard.min.js?v=1.0.3"></script>
 </body>
-</head>
+</html>

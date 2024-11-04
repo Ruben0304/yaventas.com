@@ -1,14 +1,37 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Controllers;
 
 use App\Models\Carrito;
-use App\Models\Categoria;
-use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
-class CarritoComponent extends Component
+class CartController extends Controller
 {
-    public function quitar_carrito($id)
+    public static function agregar_carrito($id, $cant)
+    {
+
+        $carrito_exist = Carrito::where('id_user', Auth::user()->id)->where('id_producto', $id)->first();
+
+        if ($carrito_exist) {
+
+
+            $actcarrito = Carrito::find($carrito_exist->id);
+            $actcarrito->cantidad = $cant + $carrito_exist->cantidad;
+            $actcarrito->save();
+        } else {
+            Carrito::create([
+                'id_user' => Auth::user()->id,
+                'id_producto' => $id,
+                'cantidad' => $cant
+            ]);
+        }
+
+
+        return redirect(route('home'));
+
+    }
+
+    public static function quitar_carrito($id)
     {
 
 
@@ -17,7 +40,7 @@ class CarritoComponent extends Component
 
     }
 
-    public function limpiar_carrito($id)
+    public static function limpiar_carrito($id)
     {
 
 
@@ -28,7 +51,7 @@ class CarritoComponent extends Component
 
 
 //restar carrito
-    public function restar_carrito($id)
+    public static function restar_carrito($id)
     {
 
         $actcarrito = Carrito::find($id);
@@ -52,7 +75,7 @@ class CarritoComponent extends Component
     }
 
 //sumar carrito
-    public function sumar_carrito($id)
+    public static function sumar_carrito($id)
     {
 
 
@@ -66,22 +89,6 @@ class CarritoComponent extends Component
 
             $actcarrito->save();
         }
-
-
-    }
-
-
-    public function render()
-    {
-
-
-
-        return view('livewire.carrito-component',[
-            'carrito'=>Carrito::all(),
-
-            'categorias'=>Categoria::all()
-        ]
-    );
 
 
     }

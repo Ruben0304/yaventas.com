@@ -1,9 +1,9 @@
 @php
-    
-    use App\Models\Whatsapp;
-    
+
+    use App\Models\Whatsapp;use Illuminate\Support\Facades\Auth;
+
     // $carrito="";
-    
+
 @endphp
 @auth
 
@@ -39,7 +39,7 @@
                                         <div class="product-image-slider">
                                             <figure class="border-radius-10">
                                                 <img src="{{ $producto->foto }}" alt="product image"
-                                                    style="width: 100%, heigth: 100%">
+                                                     style="width: 100%">
                                             </figure>
                                             @if ($producto->foto_2 != null)
                                                 <figure class="border-radius-10">
@@ -53,7 +53,6 @@
                                                 @endif
 
                                             @endif
-
 
 
                                         </div>
@@ -75,7 +74,7 @@
                                             <li class="social-facebook"><a href="#"><img
                                                         src="assets/imgs/theme/icons/icon-facebook.svg"
                                                         alt=""></a></li>
-                                            <li class="social-twitter"> <a href="#"><img
+                                            <li class="social-twitter"><a href="#"><img
                                                         src="assets/imgs/theme/icons/icon-twitter.svg"
                                                         alt=""></a></li>
                                             <li class="social-instagram"><a href="#"><img
@@ -97,75 +96,13 @@
                                                 <span> Categoria: <a
                                                         href="a','categoria='.$producto->categoria->id.'')}}">{{ $producto->categoria->nombre }}</a></span>
                                             </div>
-                                            {{-- <div class="product-rate-cover text-end">
-                                                <div class="product-rate d-inline-block">
-                                                    {{-- @switch($valoracion)
-                                                    @case(0)
-                                                    <i class="fi-rs-star" ></i>
-                                                    <i class="fi rs-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                        @break
-                                                    @case(1)
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>  
-                                                        @break
-                                                        
-                                                    @case(2)
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                        @break
-                                                    @case(3)
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                        @break
-                                                        @case(4)
-                                                        <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                        @break
-                                                    @case(5)
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                        @break
-                                                        
-                                                    @default
-                                                    
-                                                @endswitch
-                                                @if (($valoracion > 4) & ($valoracion < 5))
-                                                     <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i> --}}
 
-                                            {{-- @endif 
-                                              
-                                                    {{-- <div class="product-ratinn" style="width:90%"> 
-                                                    </div>
-                                                </div>
-                                                <span class="font-small ml-5 text-muted"> (25 reviews)</span>
-                                            </div> --}}
                                         </div>
                                         <div class="clearfix product-price-cover">
                                             <div class="product-price primary-color float-left">
                                                 <ins><span
-                                                        class="text-brand">${{ $whatsapp ? $producto->preciocup : $producto->preciocup + 0.1 * $producto->preciocup }}</span></ins>
+                                                        class="text-brand">${{ $whatsapp ? $producto->preciocup : $producto->preciocup + 0.1 * $producto->preciocup }}</span>
+                                                </ins>
                                                 {{-- <ins><span class="old-price font-md ml-15">$200.00</span></ins> --}}
                                                 <hr>
                                                 @auth
@@ -202,8 +139,8 @@
                                             <strong class="mr-10">Color</strong>
                                             <ul class="list-filter color-filter">
                                                 @foreach ($productos as $item)
-                                                    <li> <a href="{{ route('detalles', 'id=' . $item->id . '') }}"
-                                                            data-color="{{ $item->color }}"> <span
+                                                    <li><a href="{{ route('detalles', 'id=' . $item->id . '') }}"
+                                                           data-color="{{ $item->color }}"> <span
                                                                 class="product-color-{{ $item->color }}"
                                                                 style="background-color:{{ $item->color }}"></span></a>
                                                     </li>
@@ -230,18 +167,21 @@
                                         <div class="detail-extralink">
                                             {{-- <div class="detail-qty border radius">
                                                 {{-- <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                                {{-- <input type="text" class="qty-val" value="1" name="cantidad"/> 
-                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a> 
+                                                {{-- <input type="text" class="qty-val" value="1" name="cantidad"/>
+                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                             </div> --}}
                                             <div class="product-extra-link2">
                                                 @auth
                                                     <button type="submit" class="button button-add-to-cart"
-                                                        wire:click.prevent="agregar_carrito({{ $producto->id }},1)">Agregar
-                                                        al carrito 🛒</button>
+                                                            wire:click.prevent="agregar_carrito({{ $producto->id }},1)">
+                                                        Agregar
+                                                        al carrito 🛒
+                                                    </button>
                                                 @else
                                                     <button type="submit" class="button button-add-to-cart"
-                                                        wire:click.prevent="login({{ $producto->id }})">Agregar al
-                                                        carrito 🛒</button>
+                                                            wire:click.prevent="login({{ $producto->id }})">Agregar al
+                                                        carrito 🛒
+                                                    </button>
 
                                                 @endauth
 
@@ -249,20 +189,20 @@
                                                 <form action="{{ route('gpt') }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="product"
-                                                        value="{{ $producto->nombre }}">
-                                                        <input type="hidden" name="descripcion"
-                                                        value="{{ $producto->descripcion }}">
-                                                        <input type="hidden" name="precio"
-                                                        value="{{ $producto->preciocup }}">
+                                                           value="{{ $producto->nombre }}">
+                                                    <input type="hidden" name="descripcion"
+                                                           value="{{ $producto->descripcion }}">
+                                                    <input type="hidden" name="precio"
+                                                           value="{{ $producto->preciocup }}">
                                                     <input type="hidden" name="id" value="{{ $producto->id }}">
                                                     <button type="submit" class="button button-add-to-cart"
-                                                        style="background-color: #BCCA25; margin-top:10px;border-color:#BCCA25">Compartir
+                                                            style="background-color: #BCCA25; margin-top:10px;border-color:#BCCA25">
+                                                        Compartir
                                                         por
-                                                        whatsapp 💬</button>
+                                                        whatsapp 💬
+                                                    </button>
 
                                                 </form>
-
-
 
 
                                             </div>
@@ -282,7 +222,7 @@
                                 <ul class="nav nav-tabs text-uppercase">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="Description-tab" data-bs-toggle="tab"
-                                            href="#Description">Descripcion</a>
+                                           href="#Description">Descripcion</a>
                                     </li>
                                     {{-- <li class="nav-item">
                                         <a class="nav-link" id="Additional-info-tab" data-bs-toggle="tab" href="#Additional-info">Additional info</a>
@@ -709,7 +649,7 @@
 
                                         <input type="hidden" name="buscar" value="{{ $categoria->id }}">
                                         <li><a href=""
-                                                onclick="event.preventDefault(); this.closest('form').submit()">{{ $categoria->nombre }}</a>
+                                               onclick="event.preventDefault(); this.closest('form').submit()">{{ $categoria->nombre }}</a>
                                         </li>
 
 

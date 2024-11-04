@@ -4,22 +4,22 @@
     use App\Models\Whatsapp;
     $carrito = Carrito::all();
     $categorias = Categoria::all();
-    
+
     // $carrito="";
-    
+
 @endphp
 @auth
-    @php
-        
-        $whatsapp = Whatsapp::where('id_user', Auth::user()->id)->first() ?? null;
-    @endphp
+@php
+
+    $whatsapp = Whatsapp::where('id_user', Auth::user()->id)->first() ?? null;
+@endphp
 @else
-    @php
-        $whatsapp = null;
-    @endphp
+@php
+    $whatsapp = null;
+@endphp
 @endauth
 
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html class="no-js" lang="en">
 
 <head>
@@ -27,13 +27,13 @@
     <title>YaVentas - Tu tienda online en Cuba</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
-        content="YaVentas es una tienda online que se dedica a vender productos variados y de buena calidad y precio en Cuba. Encuentra lo que buscas y recíbelo en tu casa con facilidad y seguridad." />
-    <meta name="keywords" content="tienda online, productos variados, buena calidad, buen precio, Cuba" />
-    <meta property="og:url" content="https://yaventas.com/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="YaVentas - Tu tienda online en Cuba" />
+          content="YaVentas es una tienda online que se dedica a vender productos variados y de buena calidad y precio en Cuba. Encuentra lo que buscas y recíbelo en tu casa con facilidad y seguridad."/>
+    <meta name="keywords" content="tienda online, productos variados, buena calidad, buen precio, Cuba"/>
+    <meta property="og:url" content="https://yaventas.com/"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="YaVentas - Tu tienda online en Cuba"/>
     <meta property="og:description"
-        content="YaVentas es una tienda online que se dedica a vender productos variados y de buena calidad y precio en Cuba. Encuentra lo que buscas y recíbelo en tu casa con facilidad y seguridad." />
+          content="YaVentas es una tienda online que se dedica a vender productos variados y de buena calidad y precio en Cuba. Encuentra lo que buscas y recíbelo en tu casa con facilidad y seguridad."/>
     <link rel="shortcut icon" type="image/x-icon" href="img/logo/fav.png">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
@@ -59,107 +59,83 @@
 </head>
 
 <body>
-    <header class="header-area header-style-1 header-height-2">
-        <div class="header-top header-top-ptb-1 d-none d-lg-block">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-xl-3 col-lg-4">
-                        <div class="header-info">
-                            {{-- <ul>
-                                <li>
-                                    @if (isset($_COOKIE['moneda']))
-                                    @if ($_COOKIE['moneda'] == 'usd')
-                                    <a class="language-dropdown-active" href="#"> <i class="fi-rs-money"></i> USD <i class="fi-rs-angle-small-down"></i></a>
-                                 
-                                    @else
-                                    <a class="language-dropdown-active" href="#"> <i class="fi-rs-money"></i> CUP <i class="fi-rs-angle-small-down"></i></a>
-                                    
-                                    
-                                    @endif
-    
-                                    @else
-                                    <a class="language-dropdown-active" href="#"> <i class="fi-rs-money"></i> CUP <i class="fi-rs-angle-small-down"></i></a>
-                                    @endif
+<header class="header-area header-style-1 header-height-2">
+    <div class="header-top header-top-ptb-1 d-none d-lg-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-3 col-lg-4">
+                    <div class="header-info">
 
-                                   
-                                    <ul class="language-dropdown">
-                                        
-                                        <li><a href="{{route('cup')}}"><img src="assets/imgs/theme/flag-fr.pn" alt="">CUP</a></li>
-                                        <li><a href="{{route('usd')}}"><img src="assets/imgs/theme/flag-dt.pn" alt="">USD</a></li> 
-                                        
-                                        
-                                    </ul>
-                                </li>                                
-                            </ul> --}}
-                        </div>
                     </div>
-                    <div class="col-xl-6 col-lg-4">
-                        <div class="text-center">
-                            <div id="news-flash" class="d-inline-block">
-                                <ul>
-                                    <li>Unete a whatsapp para consegir ofertas <a href="">Unirse</a></li>
-                                    <li>Calidad y seguridad garantizadas</li>
-
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4">
-                        <div class="header-info header-info-right">
+                </div>
+                <div class="col-xl-6 col-lg-4">
+                    <div class="text-center">
+                        <div id="news-flash" class="d-inline-block">
                             <ul>
-                                @auth
-                                    <li><i class="fi-rs-key"></i><a href="{{ route('home') }}">{{ Auth::user()->name }} </a>
-                                        /
-                                        <form action="{{ route('logout') }}" method="post">
-                                            @csrf
-                                            <a href=""
-                                                onclick="event.preventDefault(); this.closest('form').submit()">Salir</a>
-                                    </li>
-                                    </form>
-                                @else
-                                    <li><i class="fi-rs-key"></i><a href="{{ route('login') }}">Entrar </a> / <a
-                                            href="{{ route('register') }}">Registrate</a></li>
-
-
-                                @endauth
+                                <li>Unete a whatsapp para consegir ofertas <a href="">Unirse</a></li>
+                                <li>Calidad y seguridad garantizadas</li>
 
                             </ul>
                         </div>
                     </div>
                 </div>
+                <div class="col-xl-3 col-lg-4">
+                    <div class="header-info header-info-right">
+                        <ul>
+                            @auth
+                                <li><i class="fi-rs-key"></i><a href="{{ route('home') }}">{{ Auth::user()->name }} </a>
+                                    <form action="{{ route('logout') }}" method="post">
+                                        @csrf
+                                        <a href=""
+                                           onclick="event.preventDefault(); this.closest('form').submit()">Salir</a>
+
+                                    </form>
+                                </li>
+                            @else
+                                <li><i class="fi-rs-key"></i><a href="{{ route('login') }}">Entrar </a> / <a
+                                        href="{{ route('register') }}">Registrate</a></li>
+
+                            @endauth
+
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
-            <div class="container">
-                <div class="header-wrap">
-                    <div class="logo logo-width-1">
-                        <a href="{{ route('home') }}"><img src="img/logo/1.png" alt="logo" width="100px"></a>
-                        {{-- <h4>Aqui va el logo.</h4> --}}
-                    </div>
-                    <div class="header-right">
-                        <div class="search-style-1">
-                            <form action="{{ route('buscar') }}" method="GET">
+    </div>
+    <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
+        <div class="container">
+            <div class="header-wrap">
+                <div class="logo logo-width-1">
+                    <a href="{{ route('home') }}"><img src="img/logo/1.png" alt="logo" width="100px"></a>
+                    {{-- <h4>Aqui va el logo.</h4> --}}
+                </div>
+                <div class="header-right">
+                    <div class="search-style-1">
+                        <form action="{{ route('buscar') }}" method="GET">
 
-                                <input type="text" placeholder="Buscar" name="buscar">
-                                <button type="submit" class="site-btn"><i class="fi-rs-search"
-                                        style="padding: 5px"></i></button>
-                            </form>
-                        </div>
-                        <div class="header-action-right">
-                            <div class="header-action-2">
-                                <div class="header-action-icon-2">
-                                    {{-- <a href="shop-wishlist.php">
-                                        <img class="svgInject" alt="Surfside Media" src="assets/imgs/theme/icons/icon-heart.svg">
-                                        <span class="pro-count blue">4</span>
-                                    </a> --}}
-                                </div>
-                                <div class="header-action-icon-2">
-                                    <a class="mini-cart-icon" href="{{ route('carrito') }}">
-                                        <img alt="Surfside Media" src="assets/imgs/theme/icons/icon-cart.svg">
-                                        <span class="pro-count blue">
-                                            @auth{{ $carrito->where('id_user', Auth::user()->id)->count() }}
+                            <input type="text" placeholder="Buscar" name="buscar">
+                            <button type="submit" class="site-btn"><i class="fi-rs-search"
+                                                                      style="padding: 5px"></i></button>
+                        </form>
+                    </div>
+                    <div class="header-action-right">
+                        <div class="header-action-2">
+                            <div class="header-action-icon-2">
+                                {{-- <a href="shop-wishlist.php">
+                                    <img class="svgInject" alt="Surfside Media" src="assets/imgs/theme/icons/icon-heart.svg">
+                                    <span class="pro-count blue">4</span>
+                                </a> --}}
+                            </div>
+                            <div class="header-action-icon-2">
+                                <a class="mini-cart-icon" href="{{ route('carrito') }}">
+                                    <img alt="Surfside Media" src="assets/imgs/theme/icons/icon-cart.svg">
+                                    <span class="pro-count blue">
+                                            @auth
+                                            {{ $carrito->where('id_user', Auth::user()->id)->count() }}
                                         @else
-                                        0 @endauth </span>
+                                            0
+                                        @endauth </span>
                                 </a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                     <ul>
@@ -171,11 +147,11 @@
                                             @else
                                                 @foreach ($carritos as $item)
                                                     <form action=" {{ route('quitar_carrito') }} "
-                                                        name="quitarcarrito{{ 2 * 34 + 345 * $item->id_user * $item->id }}"
-                                                        method="POST">
+                                                          name="quitarcarrito{{ 2 * 34 + 345 * $item->id_user * $item->id }}"
+                                                          method="POST">
                                                         @csrf
                                                         <input type="hidden" value="{{ $item->id }}"
-                                                            name="id">
+                                                               name="id">
 
                                                     </form>
                                                     <li>
@@ -205,15 +181,15 @@
                                                 @endforeach
                                             @endif
 
-                                        </ul>
-                                        <div class="shopping-cart-footer">
-                                            <div class="shopping-cart-total">
-                                                <h4>Total <span>${{ $subtotal }}</span></h4>
-                                            </div>
-                                            <div class="shopping-cart-button">
-                                                <a href="{{ route('carrito') }}" class="outline">Ver Carrito</a>
-                                                <a href="{{ route('mapa') }}">Pagar</a>
-                                            </div>
+                                    </ul>
+                                    <div class="shopping-cart-footer">
+                                        <div class="shopping-cart-total">
+                                            <h4>Total <span>${{ $subtotal }}</span></h4>
+                                        </div>
+                                        <div class="shopping-cart-button">
+                                            <a href="{{ route('carrito') }}" class="outline">Ver Carrito</a>
+                                            <a href="{{ route('mapa') }}">Pagar</a>
+                                        </div>
                                         @else
                                             <div class="shopping-cart-footer">
                                                 <div class="shopping-cart-total">
@@ -223,8 +199,8 @@
                                                     <a href="{{ route('carrito') }}" class="outline">Ver Carrito</a>
                                                     <a href="{{ route('mapa') }}">Pagar</a>
                                                 </div>
-                                            @endauth
-                                        </div>
+                                                @endauth
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -255,56 +231,48 @@
 
 
                                             <li><a href=""
-                                                    onclick="event.preventDefault(); this.closest('form').submit()"><i
-                                                        class="surfsidemedia-font-desktop"></i>{{ $categoria->nombre }}</a>
+                                                   onclick="event.preventDefault(); this.closest('form').submit()"><i
+                                                        class="surfsidemedia-font-desktop"></i>{{ $categoria->nombre }}
+                                                </a>
                                             </li>
                                         </form>
                                     @endforeach
 
-
-                                    {{-- 
-                                        
-                                        culo
-                                        <li>
-                                        <ul class="more_slide_open" style="display: none;">
-                                            <li><a href="{{route('shoping')}}"><i class="surfsidemedia-font-desktop"></i>Beauty, Health</a></li>
-                                            <li><a href="{{route('shoping')}}"><i class="surfsidemedia-font-cpu"></i>Bags and Shoes</a></li>
-                                            <li><a href="{{route('shoping')}}"><i class="surfsidemedia-font-diamond"></i>Consumer Electronics</a></li>
-                                            <li><a href="{{route('shoping')}}"><i class="surfsidemedia-font-home"></i>Automobiles & Motorcycles</a></li>
-                                        </ul>
-                                    </li> --}}
                                 </ul>
                                 <div class="more_categories">Mostrar mas...</div>
                             </div>
                         </div>
-                        <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block"
-                            style="margin-left: 100px;">
-                            <nav>
-                                <ul>
-                                    <li><a class="active" href="{{ route('home') }}">Inicio </a></li>
+                        {{--                        <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block"--}}
+                        {{--                             style="margin-left: 100px;">--}}
+                        {{--                            <nav>--}}
+                        {{--                                <ul>--}}
+                        {{--                                    <li><a class="active" href="{{ route('home') }}">Inicio </a></li>--}}
 
-                                    <li><a href="{{ route('shoping') }}">Comprar</a></li>
-                                    {{-- <li><a href="blog.html">Anuncios </a></li>       --}}
-                                    {{-- <li><a href="{{route('shoping')}}">Perros &#128054;</a></li> --}}
-
-                                    <li><a href="{{ route('dashboard') }}">Mi Cuenta </a></li>
-                                    <li><a href="{{ route('info') }}">Sobre Nosotros</a></li>
-                                    @auth
-                                        @if (Auth::user()->utype == 'ADMIN')
-                                            {{-- <li><a href="contact.html">Reservas</a></li> --}}
-                                            <li><a href="#">Administrar <i class="fi-rs-angle-down"></i></a>
-                                                <ul class="sub-menu">
-                                                    <li><a href="{{ route('admin.crear.productos') }}">Agregar
-                                                            Producto</a></li>
-                                                    <li><a href="{{ route('admin.productos') }}">Productos</a></li>
-                                                    <li><a href="{{ route('admin.categorias') }}">Categorias</a></li>
-                                                </ul>
-                                            </li>
-                                        @endif
-                                    @endauth
-                                </ul>
-                            </nav>
-                        </div>
+                        {{--                                    <li><a href="{{ route('shoping') }}">Comprar</a></li>--}}
+                        {{--                                    <li><a href="{{ route('dashboard') }}">Mi Cuenta </a></li>--}}
+                        {{--                                    <li><a href="{{ route('info') }}">Sobre Nosotros</a></li>--}}
+                        {{--                                    @auth--}}
+                        {{--                                        @if (Auth::user()->utype == 'ADMIN')--}}
+                        {{--                                            --}}{{-- <li><a href="contact.html">Reservas</a></li> --}}
+                        {{--                                            <li><a href="#">Administrar <i class="fi-rs-angle-down"></i></a>--}}
+                        {{--                                                <ul class="sub-menu">--}}
+                        {{--                                                    <li><a href="{{ route('admin.crear.productos') }}">Agregar--}}
+                        {{--                                                            Producto</a></li>--}}
+                        {{--                                                    <li><a href="{{ route('admin.productos') }}">Productos</a></li>--}}
+                        {{--                                                    <li><a href="{{ route('admin.categorias') }}">Categorias</a></li>--}}
+                        {{--                                                    <li><a href="{{ route('admin.listado.usuarios') }}">Usuarios</a>--}}
+                        {{--                                                    </li>--}}
+                        {{--                                                    <li><a href="{{ route('admin.listado.ordenes') }}">Ordenes</a></li>--}}
+                        {{--                                                    <li><a href="{{ route('admin.listado.vendedores') }}">Vendedores</a>--}}
+                        {{--                                                    </li>--}}
+                        {{--                                                </ul>--}}
+                        {{--                                            </li>--}}
+                        {{--                                        @endif--}}
+                        {{--                                    @endauth--}}
+                        {{--                                </ul>--}}
+                        {{--                            </nav>--}}
+                        {{--                        </div>--}}
+                        @livewire('navigation')
                     </div>
                     <div class="hotline d-none d-lg-block">
                         <p><i class="fi-rs-smartphone"></i><span>Contáctanos</span> +1 (786)592-6593 </p>
@@ -320,33 +288,31 @@
                                 </a> --}}
 
 
-
-
-
-
                             </div>
                             <div class="header-action-icon-2">
                                 <a class="mini-cart-icon" href="{{ route('carrito') }}">
                                     <img alt="" src="assets/imgs/theme/icons/icon-cart.svg">
 
-                                    <span class="pro-count white">@auth {{ $carritos->count() }}
+                                    <span class="pro-count white">@auth
+                                            {{ $carritos->count() }}
                                         @else
-                                        0 @endauth
+                                            0
+                                        @endauth
                                     </span>
                                 </a>
                                 {{-- @auth
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                     <ul>
-                                       
-                                            
-                                   
+
+
+
                                         @if ($carritos->first() == null)
-                                
-                               
+
+
                                         @else
-                                
+
                                         @foreach ($carritos as $item)
-                               
+
                                         <li>
                                             <div class="shopping-cart-img">
                                                 <a href="{{route('detalles','id='.$item->producto->id.'')}}"><img alt="{{$item->producto->name}}" src="{{$item->producto->foto}}"></a>
@@ -357,7 +323,7 @@
                                             </div>
                                             {{-- <div class="shopping-cart-delete">
                                                 <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                            </div> 
+                                            </div>
                                         </li>
                                        @endforeach
                                        @endif
@@ -386,6 +352,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </header>
 <div class="mobile-header-active mobile-header-wrapper-style">
     <div class="mobile-header-wrapper-inner">
@@ -420,22 +387,20 @@
                         <ul>
 
 
-
                             @foreach ($categorias as $categoria)
                                 <form action="{{ route('categoria') }}" method="GET">
 
                                     <input type="hidden" name="buscar" value="{{ $categoria->id }}">
 
                                     <li><a href=""
-                                            onclick="event.preventDefault(); this.closest('form').submit()"><i
+                                           onclick="event.preventDefault(); this.closest('form').submit()"><i
                                                 class="surfsidemedia-font-dress"></i>{{ $categoria->nombre }}</a>
                                     </li>
 
                                 </form>
 
-
                             @endforeach
-                            {{-- 
+                            {{--
                       --}}
 
 
@@ -450,50 +415,34 @@
                         <li class="menu-item-has-children"><span class="menu-expand"></span><a
                                 href="{{ route('shoping') }}">Comprar</a></li>
                         <li class="menu-item-has-children"><span class="menu-expand"></span><a
-                                href="{{ route('pedidos') }}">Mis Pedidos</a> </li>
+                                href="{{ route('pedidos') }}">Mis Pedidos</a></li>
                         @auth
                             @if (Auth::user()->utype == 'ADMIN')
                                 <li class="menu-item-has-children"><span class="menu-expand"></span><a
-                                        href="{{ route('admin.crear.productos') }}">Agregar Producto</a> </li>
-                                {{-- <ul class="dropdown"> 
-                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Administrar</a>
-                                        <ul class="dropdown">
-                                            <li><a href="{{route('admin.crear.productos')}}">Agregar Producto</a></li>
-                                            <li><a href="{{route('admin.productos')}}">Productos</a></li>
-                                            <li><a href="{{route('admin.categorias')}}">Categorias</a></a></li>
-                                        </ul>
-                                    </li> --}}
+                                        href="{{ route('admin.crear.productos') }}">Agregar Producto</a></li>
 
-                                {{--    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Men's Fashion</a>
-                                        <ul class="dropdown">
-                                            <li><a href="product-details.html">Jackets</a></li>
-                                            <li><a href="product-details.html">Casual Faux Leather</a></li>
-                                            <li><a href="product-details.html">Genuine Leather</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Technology</a>
-                                        <ul class="dropdown">
-                                            <li><a href="product-details.html">Gaming Laptops</a></li>
-                                            <li><a href="product-details.html">Ultraslim Laptops</a></li>
-                                            <li><a href="product-details.html">Tablets</a></li>
-                                            <li><a href="product-details.html">Laptop Accessories</a></li>
-                                            <li><a href="product-details.html">Tablet Accessories</a></li>
-                                        </ul>
-                                    </li>
-                                </ul> --}}
+                                <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Technology</a>
+                                    <ul class="dropdown">
+                                        <li><a href="product-details.html">Gaming Laptops</a></li>
+                                        <li><a href="product-details.html">Ultraslim Laptops</a></li>
+                                        <li><a href="product-details.html">Tablets</a></li>
+                                        <li><a href="product-details.html">Laptop Accessories</a></li>
+                                        <li><a href="product-details.html">Tablet Accessories</a></li>
+                                    </ul>
+                                </li>
+                    </ul>
 
-                                {{-- <li class="menu-item-has-children"><span class="menu-expand"></span><a href="blog.html">Blog</a></li>
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Language</a>
-                                <ul class="dropdown">
-                                    <li><a href="#">English</a></li>
-                                    <li><a href="#">French</a></li>
-                                    <li><a href="#">German</a></li>
-                                    <li><a href="#">Spanish</a></li>
-                                </ul>
-                            </li> --}}
-                                {{-- </ul> --}}
-                            @endif
-                        @endauth
+
+                    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Language</a>
+                        <ul class="dropdown">
+                            <li><a href="#">English</a></li>
+                            <li><a href="#">French</a></li>
+                            <li><a href="#">German</a></li>
+                            <li><a href="#">Spanish</a></li>
+                        </ul>
+                    </li>
+                    @endif
+                    @endauth
                 </nav>
                 <!-- mobile menu end -->
             </div>
@@ -502,12 +451,13 @@
                     {{-- <a href="" id="instalar"> Sobre Nosotros </a> --}}
                 </div>
                 <div class="single-mobile-header-info">
-                    <a href="{{ route('login') }}">@auth {{ Auth::user()->name }}
+                    <a href="{{ route('login') }}">@auth
+                            {{ Auth::user()->name }}
                         @else
-                        Entrar @endauth </a>
+                            Entrar
+                        @endauth </a>
                 </div>
                 @auth
-
 
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
@@ -537,98 +487,107 @@
 {{ $slot }}
 
 <footer class="main">
-    {{-- <section class="newsletter p-30 text-white wow fadeIn animated">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-7 mb-md-3 mb-lg-0">
-                        <div class="row align-items-center">
-                            <div class="col flex-horizontal-center">
-                                <img class="icon-email" src="assets/imgs/theme/icons/icon-email.svg" alt="">
-                                <h4 class="font-size-20 mb-0 ml-3">Sign up to Newsletter</h4>
-                            </div>
-                            <div class="col my-4 my-md-0 des">
-                                <h5 class="font-size-15 ml-4 mb-0">...and receive <strong>$25 coupon for first shopping.</strong></h5>
-                            </div>
+    <section class="newsletter p-30 text-white wow fadeIn animated">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7 mb-md-3 mb-lg-0">
+                    <div class="row align-items-center">
+                        <div class="col flex-horizontal-center">
+                            <img class="icon-email" src="assets/imgs/theme/icons/icon-email.svg" alt="icono email">
+                            <h4 class="font-size-20 mb-0 ml-3">¡Suscríbete a nuestro boletín!</h4>
                         </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <!-- Subscribe Form -->
-                        <form class="form-subcriber d-flex wow fadeIn animated">
-                            <input type="email" class="form-control bg-white font-small" placeholder="Enter your email">
-                            <button class="btn bg-dark text-white" type="submit">Subscribe</button>
-                        </form>
-                        <!-- End Subscribe Form -->
-                    </div>
-                </div>
-            </div>
-        </section> --}}
-    {{-- <section class="section-padding footer-mid">
-            <div class="container pt-15 pb-20">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="widget-about font-md mb-md-5 mb-lg-0">
-                            <div class="logo logo-width-1 wow fadeIn animated">
-                                <a href="{{route('home')}}"><img src="assets/imgs/logo/logo.png" alt="logo"></a>
-                            </div>
-                            <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">Contact</h5>
-                            <p class="wow fadeIn animated">
-                                <strong>Address: </strong>562 Wellington Road
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Phone: </strong>+1 0000-000-000
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Email: </strong>contact@surfsidemedia.in
-                            </p>
-                            <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">Follow Us</h5>
-                            <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
-                                <a href="#"><img src="assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                                <a href="#"><img src="assets/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                                <a href="#"><img src="assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                                <a href="#"><img src="assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                                <a href="#"><img src="assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">About</h5>
-                        <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Delivery Information</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                            <li><a href="#">Contact Us</a></li>                            
-                        </ul>
-                    </div>
-                    <div class="col-lg-2  col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">Mi cuenta</h5>
-                        <ul class="footer-list wow fadeIn animated">
-                            <li><a href="my-account.html">Mi cuenta</a></li>
-                            <li><a href="#">View Cart</a></li>
-                            <li><a href="#">My Wishlist</a></li>
-                            <li><a href="#">Track My Order</a></li>                            
-                            <li><a href="#">Order</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-4 mob-center">
-                        <h5 class="widget-title wow fadeIn animated">Install App</h5>
-                        <div class="row">
-                            <div class="col-md-8 col-lg-12">
-                                <p class="wow fadeIn animated">From App Store or Google Play</p>
-                                <div class="download-app wow fadeIn animated mob-app">
-                                    <a href="#" class="hover-up mb-sm-4 mb-lg-0"><img class="active" src="assets/imgs/theme/app-store.jpg" alt=""></a>
-                                    <a href="#" class="hover-up"><img src="assets/imgs/theme/google-play.jpg" alt=""></a>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
-                                <p class="mb-20 wow fadeIn animated">Secured Payment Gateways</p>
-                                <img class="wow fadeIn animated" src="assets/imgs/theme/payment-method.png" alt="">
-                            </div>
+                        <div class="col my-4 my-md-0 des">
+                            <h5 class="font-size-15 ml-4 mb-0">...y recibe un <strong>cupón de $25 en tu primera
+                                    compra</strong></h5>
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-5">
+                    <form class="form-subcriber d-flex wow fadeIn animated">
+                        <input type="email" class="form-control bg-white font-small"
+                               placeholder="Ingresa tu correo electrónico">
+                        <button class="btn bg-dark text-white hover-up" type="submit">Suscribirse</button>
+                    </form>
+                </div>
             </div>
-        </section> --}}
+        </div>
+    </section>
+    <section class="section-padding footer-mid">
+        <div class="container pt-15 pb-20">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="widget-about font-md mb-md-5 mb-lg-0">
+                        <div class="logo logo-width-1 wow fadeIn animated">
+                            <a href="{{route('home')}}"><img src="assets/imgs/logo/logo.png" alt="logo"></a>
+                        </div>
+                        <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">Contacto</h5>
+                        <p class="wow fadeIn animated">
+                            <strong>Dirección: </strong>Calle Wellington 562
+                        </p>
+                        <p class="wow fadeIn animated">
+                            <strong>Teléfono: </strong>+1 0000-000-000
+                        </p>
+                        <p class="wow fadeIn animated">
+                            <strong>Correo: </strong>contacto@yunioramerica.com
+                        </p>
+                        <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">Síguenos en Redes</h5>
+                        <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
+                            <a href="#" class="hover-up"><img src="assets/imgs/theme/icons/icon-facebook.svg"
+                                                              alt="facebook"></a>
+                            <a href="#" class="hover-up"><img src="assets/imgs/theme/icons/icon-twitter.svg"
+                                                              alt="twitter"></a>
+                            <a href="#" class="hover-up"><img src="assets/imgs/theme/icons/icon-instagram.svg"
+                                                              alt="instagram"></a>
+                            <a href="#" class="hover-up"><img src="assets/imgs/theme/icons/icon-pinterest.svg"
+                                                              alt="pinterest"></a>
+                            <a href="#" class="hover-up"><img src="assets/imgs/theme/icons/icon-youtube.svg"
+                                                              alt="youtube"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3">
+                    <h5 class="widget-title wow fadeIn animated">Nosotros</h5>
+                    <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
+                        <li><a href="#" class="hover-up">Quiénes Somos</a></li>
+                        <li><a href="#" class="hover-up">Información de Envíos</a></li>
+                        <li><a href="#" class="hover-up">Política de Privacidad</a></li>
+                        <li><a href="#" class="hover-up">Términos y Condiciones</a></li>
+                        <li><a href="#" class="hover-up">Contáctanos</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-3">
+                    <h5 class="widget-title wow fadeIn animated">Mi Cuenta</h5>
+                    <ul class="footer-list wow fadeIn animated">
+                        <li><a href="mi-cuenta.html" class="hover-up">Mi Perfil</a></li>
+                        <li><a href="#" class="hover-up">Ver Carrito</a></li>
+                        <li><a href="#" class="hover-up">Lista de Deseos</a></li>
+                        <li><a href="#" class="hover-up">Seguir Pedido</a></li>
+                        <li><a href="#" class="hover-up">Mis Pedidos</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mob-center">
+                    <h5 class="widget-title wow fadeIn animated">Descarga Nuestra App</h5>
+                    <div class="row">
+                        <div class="col-md-8 col-lg-12">
+                            <p class="wow fadeIn animated">Disponible en App Store y Google Play</p>
+                            <div class="download-app wow fadeIn animated mob-app">
+                                <a href="#" class="hover-up mb-sm-4 mb-lg-0"><img class="active"
+                                                                                  src="assets/imgs/theme/app-store.jpg"
+                                                                                  alt="app store"></a>
+                                <a href="#" class="hover-up"><img src="assets/imgs/theme/google-play.jpg"
+                                                                  alt="google play"></a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
+                            <p class="mb-20 wow fadeIn animated">Métodos de Pago Seguros</p>
+                            <img class="wow fadeIn animated" src="assets/imgs/theme/payment-method.png"
+                                 alt="métodos de pago">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <div class="container pb-20 wow fadeIn animated mob-center">
         <div class="row">
             <div class="col-12 mb-20">
@@ -636,21 +595,57 @@
             </div>
             <div class="col-lg-6">
                 <p class="float-md-left font-sm text-muted mb-0">
-                    <a href="{{ route('politica') }}">Política de Privacidad</a> | <a
-                        href="{{ route('terminos') }}">Terminos & Condiciones</a>
+                    <a href="{{ route('politica') }}" class="hover-up">Política de Privacidad</a> |
+                    <a href="{{ route('terminos') }}" class="hover-up">Términos y Condiciones</a>
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <p class="text-lg-end text-start font-sm text-muted mb-0">
+                    &copy; <strong class="text-brand">Yunior America</strong> - Todos los derechos
+                    reservados {{ date('Y') }}
                 </p>
             </div>
         </div>
-        <div class="col-lg-6">
-            <p class="text-lg-end text-start font-sm text-muted mb-0">
-                &copy; <strong class="text-brand">Yunior America </strong>Todos los derechos Reservados
-            </p>
-
-
-
-        </div>
     </div>
 </footer>
+
+<style>
+    .hover-up {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .hover-up:hover {
+        transform: translateY(-5px);
+    }
+
+    .footer-list li a {
+        transition: all 0.3s ease;
+        line-height: 2.5;
+    }
+
+    .footer-list li a:hover {
+        padding-left: 5px;
+    }
+
+    .mobile-social-icon a {
+        margin-right: 15px;
+    }
+
+    .btn {
+        border-radius: 5px;
+        padding: 10px 25px;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .newsletter {
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+</style>
 <!-- Vendor JS-->
 @livewireScripts
 

@@ -16,8 +16,8 @@
         </div>
 
         <section class="pedidos" style="height: 700px; padding:20px; margin-left:30px; margin-right:30px">
-            <iframe src="http://yaventas.com/tabla" frameborder="0" width="100%" height="100%"></iframe>
-        
+            <iframe src="http://127.0.0.1:8000/tabla" frameborder="0" width="100%" height="100%"></iframe>
+
         </section>
         <a class="btn " href="{{ route('shoping') }}"><i
             class="fi-rs-shopping-bag mr-10"></i>Volver a la tienda</a>

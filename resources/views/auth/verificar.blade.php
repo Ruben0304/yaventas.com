@@ -61,18 +61,6 @@
 
                                         <br>
 
-                                        {{-- <input type="hidden"  name="phone_number" value="{{ $phone }}">
-                                            <div class="form-group">
-                                            <label for="channel">Canal:</label>
-                                            <br>
-                                           
-                                            <input type="radio" id="whatsapp" name="channel" value="whatsapp" checked>
-                                            <label for="whatsapp">WhatsApp</label>
-                                            <br>
-                                            <input type="radio" id="sms" name="channel" value="sms">
-                                            <label for="sms">SMS</label>
-                                            </div> --}}
-
                                         <form method="POST" action="{{ route('twilio_send') }}">
                                             @csrf
                                             <input type="hidden" name="phone_number" value="{{ $phone }}">

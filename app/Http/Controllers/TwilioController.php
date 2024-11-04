@@ -3,157 +3,153 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Twilio\Rest\Client;
+use Illuminate\Support\Facades\Log;
 
 class TwilioController extends Controller
 {
     /**
-     * Send a verification code to the user.
+     * Enviar código de verificación por SMS.
      *
-     * @param  Request  $request
-     * @return Response
+     * @return \Illuminate\View\View
      */
-
-    public function verificar(){
-        $phoneNumber = Auth::user()->email;
-        $channel = 'sms';
-        $user = User::where('email', '=', $phoneNumber)->first();
-
-        // Verifica si ha pasado 1 minuto desde el último intento de envío
-        if ($user && $user->last_code_sent_at && now()->diffInSeconds($user->last_code_sent_at) < 60) {
-            return view('auth.verificar', ['phone' => $phoneNumber, 'enviado' => true])->with('error', 'Debes esperar un minuto entre cada intento de envío de código.');
-        }
-    
-        // Verifica si el usuario ha excedido el límite de intentos en las últimas 24 horas
-        if ($user && $user->code_attempts >= 5 && now()->diffInHours($user->last_code_sent_at) < 24) {
-            return view('auth.verificar', ['phone' => $phoneNumber, 'enviado' => true])->with('error', 'Has excedido el límite de intentos de envío de código por hoy.');
-        }
-    
-        $sid = env("TWILIO_SID");
-        $token = env("TWILIO_AUTH_TOKEN");
-        $twilio = new Client($sid, $token);
-    
-        $verification = $twilio->verify->v2->services(env("TWILIO_VERIFICATION_SID"))
-            ->verifications
-            ->create($phoneNumber, $channel);
-    
-        // Incrementar el contador de intentos de código y actualizar el último momento de envío
-        if ($user) {
-            $user->update([
-                'last_code_sent_at' => now(),
-                'code_attempts' => $user->code_attempts + 1,
-            ]);
-        }
-    
-        // TODO: Respond with a success message or handle any errors
-        
-        return view('auth.verificar', ['phone' => $phoneNumber, 'enviado' => true]);
-    }
-
-
-    public function send(Request $request)
+    public function verificar()
     {
-        $request->validate([
-            'phone_number' => 'required|string|max:15',
-            'channel' => 'required|string|in:sms,whatsapp'
-        ],[
-            'phone_number.required' => 'El número de teléfono es obligatorio',
-            'phone_number.string' => 'El número de teléfono debe ser una cadena de texto',
-            'phone_number.max' => 'El número de teléfono no debe superar los 15 caracteres',
-            'channel.required' => 'El canal es obligatorio',
-            'channel.string' => 'El canal debe ser una cadena de texto',
-            'channel.in' => 'El canal debe ser "sms" o "whatsapp"',
-        ]);
-    
-        $phoneNumber = $request->phone_number;
-        $channel = $request->channel;
-        $user = User::where('email', '=', $phoneNumber)->first();
+        $user = Auth::user();
+        $phoneNumber = $user->email;
 
-        // Verifica si ha pasado 1 minuto desde el último intento de envío
-        if ($user && $user->last_code_sent_at && now()->diffInSeconds($user->last_code_sent_at) < 60) {
-            return view('auth.verificar', ['phone' => $phoneNumber, 'enviado' => true])->with('error', 'Debes esperar un minuto entre cada intento de envío de código.');
+        // Validación de tiempo y límites de intentos
+        $error = $this->checkSendRestrictions($user);
+        if ($error) {
+            return view('auth.verificar', ['phone' => $phoneNumber, 'enviado' => true])->with('error', $error);
         }
-    
-        // Verifica si el usuario ha excedido el límite de intentos en las últimas 24 horas
-        if ($user && $user->code_attempts >= 5 && now()->diffInHours($user->last_code_sent_at) < 24) {
-            return view('auth.verificar', ['phone' => $phoneNumber, 'enviado' => true])->with('error', 'Has excedido el límite de intentos de envío de código por hoy.');
-        }
-    
-        $sid = env("TWILIO_SID");
-        $token = env("TWILIO_AUTH_TOKEN");
-        $twilio = new Client($sid, $token);
-    
-        $verification = $twilio->verify->v2->services(env("TWILIO_VERIFICATION_SID"))
-            ->verifications
-            ->create($phoneNumber, $channel);
-    
-        // Incrementar el contador de intentos de código y actualizar el último momento de envío
-        if ($user) {
+
+        // Generar un código de verificación aleatorio
+        $verificationCode = rand(100000, 999999);
+
+        try {
+            $this->sendSmsVerificationCode($phoneNumber, $verificationCode);
+
+            // Actualizar el último intento de envío y el número de intentos
             $user->update([
                 'last_code_sent_at' => now(),
                 'code_attempts' => $user->code_attempts + 1,
+                'verification_code' => $verificationCode, // Guardar el código generado
             ]);
+        } catch (\Exception $e) {
+            Log::error("Error al enviar el código de verificación: " . $e->getMessage());
+            return view('auth.verificar', ['phone' => $phoneNumber, 'enviado' => true])->with('error', 'Hubo un error al enviar el código.');
         }
-    
-        // TODO: Respond with a success message or handle any errors
-        
+
         return view('auth.verificar', ['phone' => $phoneNumber, 'enviado' => true]);
     }
 
     /**
-     * Check the verification code entered by the user.
+     * Enviar el código de verificación por SMS utilizando Twilio.
      *
-     * @param  Request  $request
-     * @return Response
+     * @param  string  $phoneNumber
+     * @param  int  $code
+     * @return void
      */
-    public function check(Request $request)
-{
-    $messages = [
-        'phone_number.required' => 'El número de teléfono es requerido.',
-        'phone_number.string' => 'El número de teléfono debe ser una cadena de texto.',
-        'phone_number.max' => 'El número de teléfono no puede tener más de 15 caracteres.',
-        'code.required' => 'El código es requerido.',
-        'code.string' => 'El código debe ser una cadena de texto.',
-        'code.max' => 'El código no puede tener más de 6 caracteres.',
-    ];
+    private function sendSmsVerificationCode($phoneNumber, $code)
+    {
+        // Configuración de Twilio
+        $sid = env("TWILIO_SID");
+        $token = env("TWILIO_AUTH_TOKEN");
+        $fromNumber = env("TWILIO_PHONE_NUMBER");
 
-    $validatedData = $request->validate([
-        'phone_number' => 'required|string|max:15',
-        'code' => 'required|string|max:6',
-    ], $messages);
+        // Crear una nueva instancia del cliente de Twilio
+        $twilio = new Client($sid, $token);
 
-    $phoneNumber = $validatedData['phone_number'];
-    $code = $validatedData['code'];
-
-    $sid = env("TWILIO_SID");
-    $token = env("TWILIO_TOKEN");
-    $twilio = new Client($sid, $token);
-
-    try {
-        $verification_check = $twilio->verify->v2->services(env("TWILIO_VERIFICATION_SID"))
-            ->verificationChecks
-            ->create(["code"=> $code,"to" => $phoneNumber]);
-
-        if ($verification_check->status === 'approved') {
-            $usuario = User::where('email', '=', $phoneNumber)->first();
-            $usuario->verificado = true;
-            $usuario->save();
-            Auth::login($usuario);
-            return redirect(route('home'));
-        } else {
-            return view('auth.verificar', ['phone' => $phoneNumber, 'enviado' => true])
-                ->with('error', 'El código es incorrecto.');
-        }
-    } catch (\Exception $e) {
-        return view('auth.verificar', ['phone' => $phoneNumber, 'enviado' => true])
-            ->with('error', 'El código es incorrecto.');
+        // Enviar el mensaje SMS con el código de verificación
+        $message = "Su código para Yaventas es: $code";
+        $twilio->messages->create($phoneNumber, [
+            'from' => $fromNumber,
+            'body' => $message,
+        ]);
     }
-}
 
-    
+    /**
+     * Validar restricciones de tiempo y de intentos de envío de código.
+     *
+     * @param  User  $user
+     * @return string|null
+     */
+    private function checkSendRestrictions($user)
+    {
+        if ($user && $user->last_code_sent_at && now()->diffInSeconds($user->last_code_sent_at) < 60) {
+            return 'Debes esperar un minuto entre cada intento de envío de código.';
+        }
+        if ($user && $user->code_attempts >= 5 && now()->diffInHours($user->last_code_sent_at) < 24) {
+            return 'Has excedido el límite de intentos de envío de código por hoy.';
+        }
+        return null;
+    }
 
 
+    public function check(Request $request)
+    {
+        // Validar la solicitud
+        $request->validate([
+            'phone_number' => 'required|string',
+            'code' => 'required|string|size:6',
+        ], [
+            'code.required' => 'El código es obligatorio',
+            'code.size' => 'El código debe tener 6 dígitos',
+        ]);
+
+        try {
+            // Buscar el usuario por su número de teléfono (guardado en email)
+            $user = User::where('email', $request->phone_number)->first();
+
+            if (!$user) {
+                return back()->withErrors([
+                    'code' => 'Usuario no encontrado.'
+                ]);
+            }
+
+            // Verificar si el código ha expirado (30 minutos)
+            if ($user->last_code_sent_at && now()->diffInMinutes($user->last_code_sent_at) > 30) {
+                return back()->withErrors([
+                    'code' => 'El código ha expirado. Por favor, solicita uno nuevo.'
+                ]);
+            }
+
+            // Verificar si el código es correcto
+            if ($user->verification_code !== $request->code) {
+                // Incrementar contador de intentos fallidos
+                $user->increment('code_attempts');
+
+                // Si hay demasiados intentos fallidos, bloquear temporalmente
+                if ($user->code_attempts >= 5) {
+                    return back()->withErrors([
+                        'code' => 'Has excedido el número máximo de intentos. Por favor, espera 24 horas o contacta a soporte.'
+                    ]);
+                }
+
+                return back()->withErrors([
+                    'code' => 'El código ingresado no es correcto. Por favor, intenta nuevamente.'
+                ]);
+            }
+
+            // Si el código es correcto, marcar al usuario como verificado
+            $user->update([
+                'verificado' => true, // Usar el campo verificado en lugar de phone_verified_at
+                'verification_code' => null, // Limpiar el código usado
+                'code_attempts' => 0 // Resetear los intentos
+            ]);
+
+            // Redirigir al usuario a la página principal o dashboard
+            return redirect()->route('dashboard')
+                ->with('status', '¡Número de teléfono verificado correctamente!');
+
+        } catch (\Exception $e) {
+            Log::error("Error en la verificación del código: " . $e->getMessage());
+            return back()->withErrors([
+                'code' => 'Hubo un error al verificar el código. Por favor, intenta nuevamente.'
+            ]);
+        }
+    }
 }
