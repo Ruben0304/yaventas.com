@@ -1,5 +1,5 @@
 <div>
-    <main class="main single-page" style="display:none">
+    <main class="main single-page"></main>
         <div class="page-header breadcrumb-wrap">
             <div class="container">
                 <div class="breadcrumb">
@@ -91,10 +91,10 @@
                             </div>
                             <div class="pl-30">
                                 <h5 class="mb-5 fw-500">
-                                    Yunior Gonzalez
+                                    Fabian Fernandez
                                 </h5>
-                                <p class="font-sm text-grey-5">CEO</p>
-                                <p class="text-grey-3">Creador de la marca Yunior America.</p>
+                                <p class="font-sm text-grey-5">Desarrollador</p>
+                                <p class="text-grey-3">Estudiante de Ing.Informatica en la CUJAE</p>
                                 <div class="social-icons single-share">
                                     <ul class="text-grey-5 d-inline-block">
 
@@ -143,10 +143,10 @@
                             </div>
                             <div class="pl-30">
                                 <h5 class="mb-5 fw-500">
-                                    Javier Rodriguez
+                                    Eduardo Fonseca
                                 </h5>
                                 <p class="font-sm text-grey-5">Marketing</p>
-                                <p class="text-grey-3">Estudiante de Ing. Quimica en la CUJAE.</p>
+                                <p class="text-grey-3">Estudiante de Ing.Informatica en la CUJAE.</p>
                                 <div class="social-icons single-share">
                                     <ul class="text-grey-5 d-inline-block">
 

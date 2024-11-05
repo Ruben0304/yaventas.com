@@ -34,4 +34,5 @@ class Ordene extends Model
         'usuario_remoto', 'nombre', 'direccion', 'pais', 'provincia', 'municipio', 'telefono',
         'id_user'
     ];
+
 }

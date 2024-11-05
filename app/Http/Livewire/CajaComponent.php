@@ -36,7 +36,7 @@ class CajaComponent extends Component
 
     public function render(Request $request)
     {
-        
+
         // dd($request->location);
         $municipios = [
             'Arroyo Naranjo',
@@ -56,12 +56,12 @@ class CajaComponent extends Component
             'San Miguel del Padrón'
         ];
         $carrito = Carrito::all();
-        $ordenes = Ordene::where('id_user', Auth::user()->id)->orderBy('created_at', 'DESC')->first();
+        $ordenes = Auth::user()->orders()->orderBy('created_at', 'DESC')->first();
         $shippingCost = 0;
 
 
         $distance = $this->calculateDistance($request->location);
-        $shippingCost = $distance * 65; 
+        $shippingCost = $distance * 65;
 
 
         return view('livewire.caja-component', [

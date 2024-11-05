@@ -12,8 +12,35 @@ class ListadoUsuarios extends Component
 
     public $search = '';
     protected $roleTypes = ["ADMIN","USER"];
+    public $userIdToDelete = null;
 
     protected $listeners = ['userUpdated' => '$refresh'];
+
+    public function deleteUser()
+    {
+        $user = User::find($this->userIdToDelete);
+
+        if (!$user) {
+            session()->flash('error', 'Usuario no encontrado');
+            return;
+        }
+
+        // Evitar que se elimine a sí mismo
+        if ($user->id === auth()->id()) {
+            session()->flash('error', 'No puedes eliminar tu propio usuario');
+            return;
+        }
+
+        $user->delete();
+        $this->userIdToDelete = null;
+
+        session()->flash('message', 'Usuario eliminado correctamente');
+    }
+
+    public function confirmDelete($userId)
+    {
+        $this->userIdToDelete = $userId;
+    }
 
     public function updateUserRole($userId, $userRole)
     {

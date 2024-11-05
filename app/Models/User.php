@@ -58,6 +58,12 @@ class User extends Authenticatable
         return $this->hasMany(Ordene::class,'id_user', 'id');
     }
 
+    public function carrito():HasMany
+    {
+        return $this->hasMany(Carrito::class,'id_user');
+    }
+
+
 
 
 
