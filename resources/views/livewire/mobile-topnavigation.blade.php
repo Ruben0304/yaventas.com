@@ -61,7 +61,7 @@
                             </div>
                             <div class="shopping-cart-button">
                                 <a href="{{route('carrito')}}">Ver carrito</a>
-                                <a href="{{route('caja')}}">Pagar</a>
+                                <a href="{{route('mapa')}}">Pagar</a>
                             </div>
                         </div>
                     </div>

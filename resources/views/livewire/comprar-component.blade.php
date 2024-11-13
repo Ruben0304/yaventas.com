@@ -1,13 +1,13 @@
 @php
-    
+
     use App\Models\Whatsapp;
-    
+
     // $carrito="";
-    
+
 @endphp
 @auth
     @php
-        
+
         $whatsapp = Whatsapp::where('id_user', Auth::user()->id)->first() ?? null;
     @endphp
 @else
@@ -213,7 +213,7 @@
                             </div>
                             {{-- <div class="list-group">
                                 <div class="list-group-item mb-10 mt-10">
-                                    
+
                                     <label class="fw-900 mt-15">Condicion</label>
                                     <div class="custome-checkbox">
                                         <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox11" value="">
@@ -222,7 +222,7 @@
                                         <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox21" value="">
                                         <label class="form-check-label" for="exampleCheckbox21"><span>De Uso ()</span></label>
                                         <br>
-                                      
+
                                     </div>
                                 </div>
                             </div> --}}
@@ -282,7 +282,6 @@
                 max: 5000,
                 values: [0, 5000],
                 slide: function(event, ui) {
-                    // 
                     @this.set('minimo', ui.values[0]);
                     @this.set('maximo', ui.values[1]);
                 }

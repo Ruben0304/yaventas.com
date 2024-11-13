@@ -115,10 +115,10 @@ return [
     |
     | This value sets the path to the Livewire manifest file.
     | The default should work for most cases (which is
-    | "<app_root>/bootstrap/cache/livewire-components.php"), but for specific
+    | "<app_root>/bootstrap/cache/livewire-component.php"), but for specific
     | cases like when hosting on Laravel Vapor, it could be set to a different value.
     |
-    | Example: for Laravel Vapor, it would be "/tmp/storage/bootstrap/cache/livewire-components.php".
+    | Example: for Laravel Vapor, it would be "/tmp/storage/bootstrap/cache/livewire-component.php".
     |
     */
 
@@ -131,7 +131,7 @@ return [
     |
     | This value determines whether the back button cache will be used on pages
     | that contain Livewire. By disabling back button cache, it ensures that
-    | the back button shows the correct state of components, instead of
+    | the back button shows the correct state of component, instead of
     | potentially stale, cached data.
     |
     | Setting it to "false" (default) will disable back button cache.

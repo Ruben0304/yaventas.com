@@ -1,0 +1,31 @@
+/* resources/css/components/auth/login.css */
+
+@layer components {
+    .login_wrap {
+        @apply bg-white p-8 rounded-lg shadow-md;
+    }
+
+    .custom_select {
+        @apply mb-4;
+    }
+
+    .custom_select select {
+        @apply w-full p-2 border border-gray-300 rounded-md;
+    }
+
+    .form-group input {
+        @apply w-full p-2 border border-gray-300 rounded-md mb-4;
+    }
+
+    .login_footer {
+        @apply flex items-center justify-between mb-4;
+    }
+
+    .custome-checkbox {
+        @apply flex items-center gap-2;
+    }
+
+    .btn-fill-out {
+        @apply w-full bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 transition-colors;
+    }
+}

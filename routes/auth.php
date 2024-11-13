@@ -10,29 +10,30 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\WhatsappController;
 use App\Http\Controllers\TwilioController;
+use App\Http\Livewire\Auth\Login;
+use App\Http\Livewire\Auth\Register;
 use Illuminate\Support\Facades\Route;
 
 
 Route::controller(WhatsappController::class)->middleware('auth')->group(function (){
     Route::get('whatsapp', 'mostrar')->name('whatsapp');
     Route::post('unirse_whatsapp', 'store')->name('unirse_whatsapp');
-   
+    Route::get('verificar/{phone}', \App\Http\Livewire\VerificarComponent::class)->name('verificar');
+
 });
 
-Route::get('verificar', [TwilioController::class, 'verificar'])->name('verificar');
+//Route::get('verificar', [TwilioController::class, 'verificar'])->name('verificar');
 
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-                ->name('register');
+    Route::get('register', Register::class)->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::get('verificar_sms', [AuthenticatedSessionController::class, 'verificar_sms'])
     ->name('verificar_sms');
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-                ->name('login');
+    Route::get('login', Login::class)->name('login');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 

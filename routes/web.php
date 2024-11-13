@@ -25,6 +25,7 @@ use App\Http\Livewire\PedidosComponent;
 use App\Http\Livewire\PoliticaComponent;
 use App\Http\Livewire\SearchComponent;
 use App\Http\Livewire\TerminosComponent;
+use App\Livewire\Auth\Login;
 use App\Models\Carrito;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -52,12 +53,13 @@ Route::get('detalles', DetallesComponent::class)->name('detalles');
 Route::get('politica_privacidad', PoliticaComponent::class)->name('politica');
 Route::get('terminos_condiciones', TerminosComponent::class)->name('terminos');
 Route::get('info', InfoComponent::class)->name('info');
-Route::get('checkout', CajaComponent::class)->middleware(['auth', 'verified'])->name('caja');
+Route::get('checkout/{location}', CajaComponent::class)->middleware(['auth', 'verified'])->name('caja');
 Route::get('dashboard', DashboardComponent::class)->middleware(['auth', 'verified'])->name('dashboard');
 Route::post('send', [TwilioController::class, 'send'])->name('twilio_send');
 Route::post('check', [TwilioController::class, 'check'])->name('twilio_check');
 Route::post('calculate-distance', [MapaComponent::class, 'calcular'])->name('calculate-distance');
 Route::get('mapa', MapaComponent::class)->name('mapa');
+
 
 //Admin routes
 Route::middleware(['auth', 'authadmin', 'verified'])->group(function () {

@@ -15,7 +15,7 @@ class TwilioController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function verificar()
+    public  function verificar()
     {
         $user = Auth::user();
         $phoneNumber = $user->email;
@@ -53,7 +53,7 @@ class TwilioController extends Controller
      * @param  int  $code
      * @return void
      */
-    private function sendSmsVerificationCode($phoneNumber, $code)
+    private  function sendSmsVerificationCode($phoneNumber, $code)
     {
         // Configuración de Twilio
         $sid = env("TWILIO_SID");
@@ -77,7 +77,7 @@ class TwilioController extends Controller
      * @param  User  $user
      * @return string|null
      */
-    private function checkSendRestrictions($user)
+    private  function  checkSendRestrictions($user)
     {
         if ($user && $user->last_code_sent_at && now()->diffInSeconds($user->last_code_sent_at) < 60) {
             return 'Debes esperar un minuto entre cada intento de envío de código.';
