@@ -145,155 +145,115 @@
                                         </script>
                                     </div>
                                     <!-- End Gallery -->
-{{--                                    <div class="social-icons single-share">--}}
-{{--                                        <ul class="text-grey-5 d-inline-block">--}}
-{{--                                            <li><strong class="mr-10">Comprte el producto:</strong></li>--}}
-{{--                                            <li class="social-facebook"><a href="#"><img--}}
-{{--                                                        src="assets/imgs/theme/icons/icon-facebook.svg"--}}
-{{--                                                        alt=""></a></li>--}}
-{{--                                            <li class="social-twitter"><a href="#"><img--}}
-{{--                                                        src="assets/imgs/theme/icons/icon-twitter.svg"--}}
-{{--                                                        alt=""></a></li>--}}
-{{--                                            <li class="social-instagram"><a href="#"><img--}}
-{{--                                                        src="assets/imgs/theme/icons/icon-instagram.svg"--}}
-{{--                                                        alt=""></a></li>--}}
-{{--                                            <li class="social-linkedin"><a href="#"><img--}}
-{{--                                                        src="assets/imgs/theme/icons/icon-pinterest.svg"--}}
-{{--                                                        alt=""></a></li>--}}
-{{--                                        </ul>--}}
-{{--                                    </div>--}}
+                                    {{--                                    <div class="social-icons single-share">--}}
+                                    {{--                                        <ul class="text-grey-5 d-inline-block">--}}
+                                    {{--                                            <li><strong class="mr-10">Comprte el producto:</strong></li>--}}
+                                    {{--                                            <li class="social-facebook"><a href="#"><img--}}
+                                    {{--                                                        src="assets/imgs/theme/icons/icon-facebook.svg"--}}
+                                    {{--                                                        alt=""></a></li>--}}
+                                    {{--                                            <li class="social-twitter"><a href="#"><img--}}
+                                    {{--                                                        src="assets/imgs/theme/icons/icon-twitter.svg"--}}
+                                    {{--                                                        alt=""></a></li>--}}
+                                    {{--                                            <li class="social-instagram"><a href="#"><img--}}
+                                    {{--                                                        src="assets/imgs/theme/icons/icon-instagram.svg"--}}
+                                    {{--                                                        alt=""></a></li>--}}
+                                    {{--                                            <li class="social-linkedin"><a href="#"><img--}}
+                                    {{--                                                        src="assets/imgs/theme/icons/icon-pinterest.svg"--}}
+                                    {{--                                                        alt=""></a></li>--}}
+                                    {{--                                        </ul>--}}
+                                    {{--                                    </div>--}}
                                 </div>
 
 
-                                <div class="col-md-6 col-sm-12 col-xs-12">
-                                    <div class="detail-info">
-                                        <h2 class="title-detail">{{ $producto->nombre }}</h2>
-                                        <div class="product-detail-rating">
+                                <div class="md:w-1/2 sm:w-full xs:w-full">
+                                    <div class="p-4 bg-white shadow-md rounded-lg">
+                                        <h2 class="text-xl font-semibold text-gray-800 mb-6">{{ $producto->nombre }}</h2>
+
+                                        <div class="mb-4">
                                             <div class="pro-details-brand">
-                                                <span> Categoria: <a
-                                                        href="a','categoria='.$producto->categoria->id.'')}}">{{ $producto->categoria->nombre }}</a></span>
+                                                <span>Categoria: <a
+                                                        href="{{ route('categoria', ['id' => $producto->categoria->id]) }}"
+                                                        class="text-blue-500">{{ $producto->categoria->nombre }}</a></span>
                                             </div>
-
                                         </div>
-                                        <div class="clearfix product-price-cover">
-                                            <div class="product-price primary-color float-left">
-                                                <ins><span
-                                                        class="text-brand">${{ $whatsapp ? $producto->preciocup : $producto->preciocup + 0.1 * $producto->preciocup }}</span>
-                                                </ins>
-                                                {{-- <ins><span class="old-price font-md ml-15">$200.00</span></ins> --}}
-                                                <hr>
-                                                @auth
 
+                                        <div class="clearfix product-price-cover mb-4">
+                                            <div class="product-price primary-color float-left"><strong
+                                                    style="color: #FF6E11; font-size: 2.0em">
+                                                    ${{ $whatsapp ? $producto->preciocup : $producto->preciocup + 0.1 * $producto->preciocup }}</span>
+                                                </strong>
+                                                <hr class="my-2">
+                                                @auth
                                                     @if ($whatsapp != null)
                                                     @else
-                                                        <span class="save-price font-md color3 ml-15"><strong
-                                                                style="color: #FF6E11; font-size: 1.2em">${{ $producto->preciocup }}</strong>
-                                                            💥 ¡Oferta única! Únete al grupo de WhatsApp <a
-                                                                href="{{ route('whatsapp') }}">aquí</a> 📲</span>
+                                                        <span
+                                                            class="product-price primary-color float-left w-full"><strong
+                                                                style="color: #FF6E11; font-size: 1.5em">${{ $producto->preciocup }}</strong>
+                             ¡Oferta única! Únete a WhatsApp <a href="{{ route('whatsapp') }}" class="text-blue-500 ">aquí</a> 📲</span>
                                                     @endif
-                                                @else
-                                                    <span class="save-price font-md color3 ml-15"><strong
-                                                            style="color: #FF6E11; font-size: 1.2em">${{ $producto->preciocup }}</strong>
-                                                        💥 ¡Oferta única! Únete al grupo de WhatsApp <a
-                                                            href="{{ route('whatsapp') }}">aquí</a> 📲</span>
-
                                                 @endauth
-
                                             </div>
                                         </div>
-                                        <div class="bt-1 border-color-1 mt-15 mb-15"></div>
-                                        <div class="short-desc mb-30">
 
-                                        </div>
-                                        {{-- <div class="product_sort_info font-xs mb-30">
-                                            <ul>
-                                                <li class="mb-10"><i class="fi-rs-crown mr-5"></i> 1 Year AL Jazeera Brand Warranty</li>
-                                                <li class="mb-10"><i class="fi-rs-refresh mr-5"></i> 30 Day Return Policy</li>
-                                                <li><i class="fi-rs-credit-card mr-5"></i> Cash on Delivery available</li>
-                                            </ul>
-                                        </div> --}}
-                                        <div class="attr-detail attr-color mb-15">
-                                            <strong class="mr-10">Color</strong>
-                                            <ul class="list-filter color-filter">
+                                        <div class="bt-1 border-color-1 mt-4 mb-4"></div>
+
+                                        <div class="short-desc mb-8"></div>
+
+                                        <div class="attr-detail attr-color mb-4">
+                                            <strong class="mr-2">Color</strong>
+                                            <ul class="list-filter color-filter flex space-x-2">
                                                 @foreach ($productos as $item)
                                                     <li><a href="{{ route('detalles', 'id=' . $item->id . '') }}"
-                                                           data-color="{{ $item->color }}"> <span
-                                                                class="product-color-{{ $item->color }}"
-                                                                style="background-color:{{ $item->color }}"></span></a>
-                                                    </li>
-                                                    {{-- <li><a href="#" data-color="Yellow"><span class="product-color-yellow"></span></a></li>
-                                                <li class="active"><a href="#" data-color="White"><span class="product-color-white"></span></a></li>
-                                                <li><a href="#" data-color="Orange"><span class="product-color-orange"></span></a></li>
-                                                <li><a href="#" data-color="Cyan"><span class="product-color-cyan"></span></a></li>
-                                                <li><a href="#" data-color="Green"><span class="product-color-green"></span></a></li>
-                                                <li><a href="#" data-color="Purple"><span class="product-color-purple"></span></a></li> --}}
+                                                           data-color="{{ $item->color }}">
+                                                            <span class="product-color-{{ $item->color }}"
+                                                                  style="background-color:{{ $item->color }}; width: 20px; height: 20px; display: inline-block; border-radius: 50%;"></span>
+                                                        </a></li>
                                                 @endforeach
                                             </ul>
                                         </div>
-                                        {{-- <div class="attr-detail attr-size">
-                                            <strong class="mr-10">Talla</strong>
-                                            <ul class="list-filter size-filter font-small">
-                                                <li><a href="#">S</a></li>
-                                                <li class="active"><a href="#">M</a></li>
-                                                <li><a href="#">L</a></li>
-                                                <li><a href="#">XL</a></li>
-                                                <li><a href="#">XXL</a></li>
-                                            </ul>
-                                        </div>  --}}
-                                        <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+
+                                        <div class="bt-1 border-color-1 mt-8 mb-8"></div>
+
                                         <div class="detail-extralink">
-                                            {{-- <div class="detail-qty border radius">
-                                                {{-- <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                                {{-- <input type="text" class="qty-val" value="1" name="cantidad"/>
-                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                            </div> --}}
                                             <div class="product-extra-link2">
                                                 @auth
-                                                    <button type="submit" class="button button-add-to-cart"
+                                                    <button type="submit"
+                                                            class="bg-blue-500 text-white px-4 py-2 rounded"
                                                             wire:click.prevent="agregar_carrito({{ $producto->id }},1)">
-                                                        Agregar
-                                                        al carrito 🛒
+                                                        Agregar al carrito 🛒
                                                     </button>
                                                 @else
-                                                    <button type="submit" class="button button-add-to-cart"
-                                                            wire:click.prevent="login({{ $producto->id }})">Agregar al
-                                                        carrito 🛒
+                                                    <button type="submit"
+                                                            class="bg-blue-500 text-white px-4 py-2 rounded"
+                                                            wire:click.prevent="login({{ $producto->id }})">
+                                                        Agregar al carrito 🛒
                                                     </button>
-
                                                 @endauth
-
-
-                                                <form action="{{ route('gpt') }}" method="post">
+                                                <form action="{{ route('gpt') }}" method="post" class="mt-4">
                                                     @csrf
-                                                    <input type="hidden" name="product"
-                                                           value="{{ $producto->nombre }}">
+                                                    <input type="hidden" name="product" value="{{ $producto->nombre }}">
                                                     <input type="hidden" name="descripcion"
                                                            value="{{ $producto->descripcion }}">
                                                     <input type="hidden" name="precio"
                                                            value="{{ $producto->preciocup }}">
                                                     <input type="hidden" name="id" value="{{ $producto->id }}">
-                                                    <button type="submit" class="button button-add-to-cart"
-                                                            style="background-color: #BCCA25; margin-top:10px;border-color:#BCCA25">
-                                                        Compartir
-                                                        por
-                                                        whatsapp 💬
+                                                    <button type="submit"
+                                                            class="bg-yellow-500 text-white px-4 py-2 rounded"
+                                                            style="background-color: #BCCA25; border-color:#BCCA25">
+                                                        Compartir por whatsapp 💬
                                                     </button>
-
                                                 </form>
-
-
                                             </div>
                                         </div>
-                                        <ul class="product-meta font-xs color-grey mt-50">
-                                            {{-- <li class="mb-5">SKU: <a href="#">FWM15VKT</a></li>
-                                            <li class="mb-5">Tags: <a href="#" rel="tag">Cloth</a>, <a href="#" rel="tag">Women</a>, <a href="#" rel="tag">Dress</a> </li> --}}
-                                            <li>Disponibilidad:<span
-                                                    class="in-stock text-success ml-5">{{ $producto->stock }} en
-                                                    Stock</span></li>
+
+                                        <ul class="product-meta font-xs text-gray-500 mt-12">
+                                            <li>Disponibilidad:<span class="in-stock text-success ml-2">{{ $producto->stock }} en Stock</span>
+                                            </li>
                                         </ul>
                                     </div>
                                     <!-- Detail Info -->
                                 </div>
+
                             </div>
                             <div class="tab-style3">
                                 <ul class="nav nav-tabs text-uppercase">

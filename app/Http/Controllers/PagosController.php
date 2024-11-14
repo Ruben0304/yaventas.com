@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Redirect;
 class PagosController extends Controller
 {
 
-  //telegram 
+  //telegram
   public function telegram()
   {
     // Definir el token de acceso y el ID del chat
@@ -104,7 +104,7 @@ class PagosController extends Controller
       municipio = ' . $municipio . '
       telefono = ' . $telefono . '
       bono = ' . $bono . '
-      
+
 
 
       Productos:
@@ -115,7 +115,7 @@ class PagosController extends Controller
         cantidad = ' . $cart_product->cantidad . '
         precio = ' . $cart_product->producto->preciocup . '
         total = ' . $cart_product->cantidad * $cart_product->producto->preciocup . '
-        
+
         ';
       }
 
@@ -198,38 +198,7 @@ class PagosController extends Controller
   {
 
 
-
-
-    $ch = curl_init();
-
-    curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/chat/completions');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array(
-      'model' => 'gpt-3.5-turbo',
-      'messages' => array(
-        array(
-          'role' => 'user',
-          'content' => 'Necesito compartir un producto llamado ' . $request->product . '.Redacta un mensaje para whatsapp, breve y preciso pero con algo de humor, se creativa,puede ser tanto para una mujer como para un hombre, usa algun emoji, no uses hashtags,no digas nada en tono de burla acerca de otros productos, y principalmente que embulle a la otra persona de comprar el producto que se le esta compartiendo, que parezca lo mas real posible, nada exagerado, que no exceda los 380 caracteres (contando espacios), no pongas nada amigo/a ni nada parecido solo saluda con un Hey o frases similares agradables y que el link donde se va a encontrar el producto es en : https://yaventas.com/detalles?id=' . $request->id . '. Aqui tienes algunos datos del producto por si los necesitas : ' . $request->descripcion . '. El precio es ' . $request->precio . ' pesos cubanos (cup).  '
-        ),
-        // 'temperature' => 0.9
-      )
-    )));
-
-    $headers = array();
-    $headers[] = 'Authorization: Bearer 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';
-    $headers[] = 'Content-Type: application/json';
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-    $result = curl_exec($ch);
-    if (curl_errno($ch)) {
-      echo 'Error:' . curl_error($ch);
-    }
-    curl_close($ch);
-
-    $response = json_decode($result);
-
-    $respuesta = 'whatsapp://send?text=' . $response->choices[0]->message->content . '';
+    $respuesta = 'whatsapp://send?text=Mira este producto increiblede yaventas.com : http://127.0.0.1:8000/detalles?id=' . $request->id . '';
 
     return redirect()->away($respuesta);
   }
