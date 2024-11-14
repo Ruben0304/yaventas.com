@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\CorreoCompra;
 use App\Models\Carrito;
 use App\Models\Orden_detalle;
 use App\Models\Ordene;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -113,6 +115,7 @@ class CajaComponent extends Component
             'telefono' => $this->telefono,
             'metodopago' => $this->metodopago,
             'comentarios' => $this->comentarios,
+            'estado'=>'PENDIENTE'
         ]);
         $order->save();
         // obtiene los productos del carrito del usuario
@@ -199,9 +202,55 @@ class CajaComponent extends Component
 
             // Cerrar la sesión de curl
             curl_close($ch);
+
+
+        }
+
+        // Después del código de Telegram...
+
+// Preparar los datos para el correo
+        $userData = [
+            'id_user' => Auth::user()->id,
+            'nombre' => $this->nombre,
+            'direccion' => $this->direccion,
+            'pais' => $this->pais,
+            'provincia' => $this->provincia,
+            'municipio' => $this->municipio,
+            'telefono' => $this->telefono,
+        ];
+
+        $orderData = [
+            'total' => $this->total,
+            'subtotal' => $this->subtotal,
+            'envio' => $this->shippingCost,
+        ];
+
+        $productsData = [];
+        foreach ($cart_products as $cart_product) {
+            $productsData[] = [
+                'nombre' => Producto::find($cart_product->id_producto)->nombre,
+                'cantidad' => $cart_product->cantidad,
+                'precio' => $cart_product->producto->preciocup,
+                'total' => $cart_product->cantidad * $cart_product->producto->preciocup,
+                'link' => 'https://yaventas.com/detalles?id=' . $cart_product->id_producto
+            ];
+        }
+
+        try {
+            Mail::to('hernandzruben9@gmail.com')
+                ->send(new CorreoCompra($userData, $orderData, $productsData));
+
+
+        } catch (\Exception $e) {
+            // Log del error
+            \Log::error('Error enviando correo: ' . $e->getMessage());
+
+
         }
         Carrito::where('id_user', Auth::user()->id)->delete();
         DB::commit();
+
+
 
         return Storage::url($pdfPath);
     }
