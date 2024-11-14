@@ -22,7 +22,7 @@ class verificadoSMS
         }
         else {
             session()->flush();
-            return redirect()->route(('verificar'));
+            return redirect()->route('verificar');
         }
     }
 }

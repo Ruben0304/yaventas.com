@@ -2,7 +2,11 @@
     <div style="background: white; max-width: 32rem; width: 100%; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); padding: 2.5rem;">
         <h2 style="text-align: center; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; color: #1a1f36;">Crear Cuenta</h2>
         <p style="text-align: center; color: #6b7280; margin-bottom: 2rem; font-size: 0.95rem;">Únete a nuestra comunidad</p>
-
+        @if ($errors->has('general'))
+            <div class="alert alert-danger">
+                {{ $errors->first('general') }}
+            </div>
+        @endif
         <form wire:submit.prevent="register">
             <!-- Nombre -->
             <div style="margin-bottom: 1.5rem;">
@@ -71,7 +75,7 @@
                            wire:model="join_whatsapp"
                            style="width: 1.25rem; height: 1.25rem; margin-top: 0.2rem; border: 2px solid #d1d5db; border-radius: 0.25rem; cursor: pointer;">
                     <span style="color: #374151; font-size: 0.9rem;">
-                        Acepta unirte a nuestro grupo de WhatsApp y disfruta de un 10% de descuento permanente. 💰😎
+                        Al registrarte aceptas nuestros terminos y condiciones.
                     </span>
                 </label>
             </div>

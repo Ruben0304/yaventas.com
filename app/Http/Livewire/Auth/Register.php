@@ -67,7 +67,6 @@ class Register extends Component
                 'verification_code' => $verificationCode,
                 'last_code_sent_at' => now(),
                 'code_attempts' => 1,
-                'join_whatsapp' => $this->join_whatsapp
             ]);
 
             event(new Registered($user));
@@ -92,11 +91,8 @@ class Register extends Component
                     'body' => $message,
                 ]);
 
-                if ($this->join_whatsapp) {
-                    $this->emit('whatsappGroupJoined');
-                }
 
-                return redirect()->route('verificar', ['phone' => $full_number]);
+                return redirect()->route('verificar');
 
 
             } catch (\Exception $e) {
