@@ -14,14 +14,14 @@ class GenerarPdf extends Component
 
     public function generarPDF()
     {
-        $pdf = PDF::loadView('livewire.pdf-template', [
-            'titulo' => 'Mi primer PDF con Livewire',
-            'fecha' => now()->format('d/m/Y'),
-            'contenido' => 'Este es un PDF de prueba'
-        ]);
-
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf->output();
-        }, 'prueba.pdf');
+//        $pdf = PDF::loadView('livewire.pdf-template', [
+//            'titulo' => 'Mi primer PDF con Livewire',
+//            'fecha' => now()->format('d/m/Y'),
+//            'contenido' => 'Este es un PDF de prueba'
+//        ]);
+//
+//        return response()->streamDownload(function () use ($pdf) {
+//            echo $pdf->output();
+//        }, 'prueba.pdf');
     }
 }

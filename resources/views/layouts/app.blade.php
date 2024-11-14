@@ -25,10 +25,10 @@
 
 </head>
 
-<body style="">
 
 
-<body class="flex flex-col min-h-screen ">
+
+<body class="min-h-screen ">
 <livewire:navigation />
 
 <livewire:mobile-navigation class="w-full shadow md:hidden" />

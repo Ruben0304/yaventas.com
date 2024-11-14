@@ -185,19 +185,6 @@ class CajaComponent extends Component
         DB::commit();
     }
 
-    private function createQvapayInvoice()
-    {
-        $response = Http::post('https://qvapay.com/api/v1/create_invoice', [
-            'app_id' => env('qvapay_id'),
-            'app_secret' => env('qvapay_secret'),
-            'amount' => $this->total,
-            'description' => 'Comprar con Qvapay orden',
-            'remote_id' => 'QVA' . str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT),
-            'signed' => 1
-        ]);
-
-        return $response->json();
-    }
 
     public function calculateDistance($location)
     {
