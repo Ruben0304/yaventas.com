@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::controller(WhatsappController::class)->middleware('auth')->group(function (){
     Route::get('whatsapp', 'mostrar')->name('whatsapp');
     Route::post('unirse_whatsapp', 'store')->name('unirse_whatsapp');
-    Route::get('verificar/{phone}', \App\Http\Livewire\VerificarComponent::class)->name('verificar');
+    Route::get('verificar/', \App\Http\Livewire\VerificarComponent::class)->name('verificar');
 
 });
 
