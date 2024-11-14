@@ -512,6 +512,8 @@
             </div>
         </section>
 
+        <livewire:generar-pdf />
+
         {{-- <section class="section-padding">
             <div class="container">
                 <h3 class="section-title mb-20 wow fadeIn animated"><span>Featured</span> Brands</h3>

@@ -198,5 +198,17 @@ Route::get('google-callback-url', function () {
 //     dd($user);
 // });
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
+Route::get('/test-pdf', function() {
+    $pdf = PDF::loadView('livewire.pdf-template', [
+        'titulo' => 'PDF de Prueba',
+        'fecha' => now()->format('d/m/Y'),
+        'contenido' => 'Esta es una prueba de PDF'
+    ]);
+
+    return $pdf->stream('prueba.pdf');
+});
+
 
 
