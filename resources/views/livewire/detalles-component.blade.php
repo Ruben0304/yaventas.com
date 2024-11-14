@@ -1,9 +1,6 @@
 @php
 
     use App\Models\Whatsapp;use Illuminate\Support\Facades\Auth;
-
-    // $carrito="";
-
 @endphp
 @auth
 
@@ -34,57 +31,137 @@
                             <div class="row mb-50">
                                 <div class="col-md-6 col-sm-12 col-xs-12">
                                     <div class="detail-gallery">
-                                        <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                                        <span><i class="fi-rs-search"></i></span>
                                         <!-- MAIN SLIDES -->
-                                        <div class="product-image-slider">
-                                            <figure class="border-radius-10">
-                                                <img src="{{ $producto->foto }}" alt="product image"
-                                                     style="width: 100%">
-                                            </figure>
-                                            @if ($producto->foto_2 != null)
-                                                <figure class="border-radius-10">
-                                                    <img src="{{ $producto->foto_2 }}" alt="product image">
+                                        <div style="max-width: 800px; margin: 0 auto; position: relative;">
+                                            <div
+                                                style="width: 100%; position: relative; overflow: hidden; border-radius: 10px;">
+                                                <figure class="border-radius-10"
+                                                        style="display: block; margin: 0; width: 100%;">
+                                                    <img src="{{ $producto->foto }}" alt="product image"
+                                                         style="width: 100%; height: auto; border-radius: 10px;">
                                                 </figure>
-
+                                                @if ($producto->foto_2 != null)
+                                                    <figure class="border-radius-10"
+                                                            style="display: none; margin: 0; width: 100%;">
+                                                        <img src="{{ $producto->foto_2 }}" alt="product image"
+                                                             style="width: 100%; height: auto; border-radius: 10px;">
+                                                    </figure>
+                                                @endif
                                                 @if ($producto->foto_3 != null)
-                                                    <figure class="border-radius-10">
-                                                        <img src="{{ $producto->foto_3 }}" alt="product image">
+                                                    <figure class="border-radius-10"
+                                                            style="display: none; margin: 0; width: 100%;">
+                                                        <img src="{{ $producto->foto_3 }}" alt="product image"
+                                                             style="width: 100%; height: auto; border-radius: 10px;">
                                                     </figure>
                                                 @endif
 
-                                            @endif
+                                                <!-- Botones de navegación -->
+                                                <button onclick="moveSlide(-1)"
+                                                        style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.8); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; z-index: 2;">
+                                                    ←
+                                                </button>
+                                                <button onclick="moveSlide(1)"
+                                                        style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.8); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; z-index: 2;">
+                                                    →
+                                                </button>
+                                            </div>
 
+                                            <!-- THUMBNAILS -->
+                                            <div
+                                                style="display: flex; justify-content: center; gap: 10px; margin-top: 20px; padding: 0 15px;">
+                                                <div onclick="currentSlide(0)"
+                                                     style="width: 100px; height: 100px; cursor: pointer; opacity: 1; border: 2px solid #4a90e2; border-radius: 5px; overflow: hidden;">
+                                                    <img src="{{ $producto->foto }}" alt="product image"
+                                                         style="width: 100%; height: 100%; object-fit: cover;">
+                                                </div>
+                                                @if ($producto->foto_2 != null)
+                                                    <div onclick="currentSlide(1)"
+                                                         style="width: 100px; height: 100px; cursor: pointer; opacity: 0.6; border-radius: 5px; overflow: hidden;">
+                                                        <img src="{{ $producto->foto_2 }}" alt="product image"
+                                                             style="width: 100%; height: 100%; object-fit: cover;">
+                                                    </div>
+                                                @endif
+                                                @if ($producto->foto_3 != null)
+                                                    <div onclick="currentSlide(2)"
+                                                         style="width: 100px; height: 100px; cursor: pointer; opacity: 0.6; border-radius: 5px; overflow: hidden;">
+                                                        <img src="{{ $producto->foto_3 }}" alt="product image"
+                                                             style="width: 100%; height: 100%; object-fit: cover;">
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
 
-                                        </div>
-                                        <!-- THUMBNAILS -->
-                                        <div class="slider-nav-thumbnails pl-15 pr-15">
-                                            <div><img src="{{ $producto->foto }}" alt="product image"></div>
-                                            @if ($producto->foto_2 != null)
-                                                <div><img src="{{ $producto->foto_2 }}" alt="product image"></div>
-                                            @endif
-                                            @if ($producto->foto_3 != null)
-                                                <div><img src="{{ $producto->foto_3 }}" alt="product image"></div>
-                                            @endif
-                                        </div>
+                                        <script>
+                                            let slideIndex = 0;
+                                            const slides = document.querySelectorAll('.border-radius-10');
+                                            const thumbnails = document.querySelectorAll('.slider-nav-thumbnails div');
+
+                                            function showSlides(n) {
+                                                if (n >= slides.length) slideIndex = 0;
+                                                if (n < 0) slideIndex = slides.length - 1;
+
+                                                // Ocultar todas las slides
+                                                slides.forEach(slide => slide.style.display = "none");
+
+                                                // Resetear opacidad de miniaturas
+                                                const thumbs = document.querySelectorAll('[onclick^="currentSlide"]');
+                                                thumbs.forEach(thumb => {
+                                                    thumb.style.opacity = "0.6";
+                                                    thumb.style.border = "none";
+                                                });
+
+                                                // Mostrar slide actual
+                                                slides[slideIndex].style.display = "block";
+                                                slides[slideIndex].style.animation = "fadeIn 0.5s";
+
+                                                // Activar miniatura actual
+                                                thumbs[slideIndex].style.opacity = "1";
+                                                thumbs[slideIndex].style.border = "2px solid #4a90e2";
+                                            }
+
+                                            function moveSlide(n) {
+                                                slideIndex += n;
+                                                showSlides(slideIndex);
+                                            }
+
+                                            function currentSlide(n) {
+                                                slideIndex = n;
+                                                showSlides(slideIndex);
+                                            }
+
+                                            // Inicializar el slider
+                                            showSlides(slideIndex);
+
+                                            // Definir la animación de fade
+                                            const style = document.createElement('style');
+                                            style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0.8; }
+                to { opacity: 1; }
+            }
+        `;
+                                            document.head.appendChild(style);
+                                        </script>
                                     </div>
                                     <!-- End Gallery -->
-                                    <div class="social-icons single-share">
-                                        <ul class="text-grey-5 d-inline-block">
-                                            <li><strong class="mr-10">Comprte el producto:</strong></li>
-                                            <li class="social-facebook"><a href="#"><img
-                                                        src="assets/imgs/theme/icons/icon-facebook.svg"
-                                                        alt=""></a></li>
-                                            <li class="social-twitter"><a href="#"><img
-                                                        src="assets/imgs/theme/icons/icon-twitter.svg"
-                                                        alt=""></a></li>
-                                            <li class="social-instagram"><a href="#"><img
-                                                        src="assets/imgs/theme/icons/icon-instagram.svg"
-                                                        alt=""></a></li>
-                                            <li class="social-linkedin"><a href="#"><img
-                                                        src="assets/imgs/theme/icons/icon-pinterest.svg"
-                                                        alt=""></a></li>
-                                        </ul>
-                                    </div>
+{{--                                    <div class="social-icons single-share">--}}
+{{--                                        <ul class="text-grey-5 d-inline-block">--}}
+{{--                                            <li><strong class="mr-10">Comprte el producto:</strong></li>--}}
+{{--                                            <li class="social-facebook"><a href="#"><img--}}
+{{--                                                        src="assets/imgs/theme/icons/icon-facebook.svg"--}}
+{{--                                                        alt=""></a></li>--}}
+{{--                                            <li class="social-twitter"><a href="#"><img--}}
+{{--                                                        src="assets/imgs/theme/icons/icon-twitter.svg"--}}
+{{--                                                        alt=""></a></li>--}}
+{{--                                            <li class="social-instagram"><a href="#"><img--}}
+{{--                                                        src="assets/imgs/theme/icons/icon-instagram.svg"--}}
+{{--                                                        alt=""></a></li>--}}
+{{--                                            <li class="social-linkedin"><a href="#"><img--}}
+{{--                                                        src="assets/imgs/theme/icons/icon-pinterest.svg"--}}
+{{--                                                        alt=""></a></li>--}}
+{{--                                        </ul>--}}
+{{--                                    </div>--}}
                                 </div>
 
 

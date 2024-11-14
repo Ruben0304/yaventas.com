@@ -17,24 +17,31 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     @laravelPWA
     @livewireStyles
-    @vite(['resources/css/app.css','resources/css/components/auth/login.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 
 </head>
 
-<body>
+<body style="">
 
 
-<livewire:navigation/>
-<livewire:mobile-navigation/>
+<body class="flex flex-col min-h-screen ">
+<livewire:navigation />
 
-<div wire:id="main-content">
-    {{ $slot }}
-</div>
+<livewire:mobile-navigation class="w-full shadow md:hidden" />
 
-<livewire:footer/>
+<main class="flex-grow">
+    <div class="max-w-7xl mx-auto px-2 sm:px-2 lg:px-2 py-8">
+        <div wire:id="main-content">
+            {{ $slot }}
+        </div>
+    </div>
+</main>
+
+<livewire:footer  />
 
 
 @livewireScripts

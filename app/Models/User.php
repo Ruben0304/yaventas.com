@@ -63,8 +63,4 @@ class User extends Authenticatable
         return $this->hasMany(Carrito::class,'id_user');
     }
 
-
-
-
-
 }
