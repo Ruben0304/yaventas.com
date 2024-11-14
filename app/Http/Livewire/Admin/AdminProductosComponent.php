@@ -31,7 +31,7 @@ class AdminProductosComponent extends Component
         'stock' => 'required|numeric',
         'id_categoria' => 'required',
         'id_vendedor' => 'required',
-        'foto' => 'required|image|max:1024',
+        'foto' => 'required|max:1024',
     ];
 
     public function mount()
@@ -48,9 +48,9 @@ class AdminProductosComponent extends Component
         $this->id_categoria = '';
         $this->id_vendedor = '';
         $this->descripcion = '';
-        $this->foto = null;
-        $this->foto2 = null;
-        $this->foto3 = null;
+        $this->foto = '';
+        $this->foto2 = '';
+        $this->foto3 = '';
         $this->duraciono = null;
         $this->preciocupo = null;
         $this->preciousdo = null;
@@ -82,11 +82,7 @@ class AdminProductosComponent extends Component
     {
         $this->validate();
 
-        $nombrefinal = $this->procesarImagen($this->foto, 'fotos_productos');
-        $nombrefinal2 = $this->procesarImagen($this->foto2, 'fotos_productos2');
-        $nombrefinal3 = $this->procesarImagen($this->foto3, 'fotos_productos3');
 
-        if ($nombrefinal) {
             Producto::create([
                 'nombre' => $this->nombre,
                 'preciocup' => $this->preciocup,
@@ -94,18 +90,15 @@ class AdminProductosComponent extends Component
                 'stock' => $this->stock,
                 'id_vendedor' => $this->id_vendedor,
                 'id_categoria' => $this->id_categoria,
-                'foto' => $nombrefinal,
-                'foto_2' => $nombrefinal2,
-                'foto_3' => $nombrefinal3,
+                'foto' => $this->foto,
+                'foto_2' => $this->foto2,
+                'foto_3' => $this->foto3,
                 'descripcion' => $this->descripcion,
             ]);
 
             $this->modo = 'lista';
             $this->resetInputs();
             session()->flash('message', 'Producto creado correctamente.');
-        } else {
-            session()->flash('error', 'Ocurrió un error al subir la imagen. No pudo guardarse.');
-        }
     }
 
     public function actualizar()
@@ -117,23 +110,20 @@ class AdminProductosComponent extends Component
             'stock' => 'required|numeric',
             'id_categoria' => 'required',
             'id_vendedor' => 'required',
-            'foto' => 'nullable|image|max:1024',
+            'foto' => 'required|max:1024',
             'descripcion' => 'required'
         ]);
 
         $producto = Producto::find($this->producto_id);
 
-        if ($this->foto) {
-            $nombrefinal = $this->procesarImagen($this->foto, 'fotos_productos');
-            $producto->foto = $nombrefinal;
-        }
+
+            $producto->foto = $this->foto2;
+
         if ($this->foto2) {
-            $nombrefinal2 = $this->procesarImagen($this->foto2, 'fotos_productos2');
-            $producto->foto_2 = $nombrefinal2;
+            $producto->foto_2 = $this->foto2;
         }
         if ($this->foto3) {
-            $nombrefinal3 = $this->procesarImagen($this->foto3, 'fotos_productos3');
-            $producto->foto_3 = $nombrefinal3;
+            $producto->foto_3 = $this->foto2;
         }
 
         $producto->nombre = $this->nombre;
@@ -179,18 +169,6 @@ class AdminProductosComponent extends Component
         }
     }
 
-    private function procesarImagen($imagen, $carpeta)
-    {
-        if ($imagen) {
-            $foto_nombre = $imagen->getClientOriginalName();
-            $nombrefinal = $carpeta . '/' . $this->id_vendedor . (date('u') . date('s')) . Str::slug($this->nombre) . $foto_nombre;
-
-            $imagen->storeAs('public/' . $carpeta, $this->id_vendedor . (date('u') . date('s')) . Str::slug($this->nombre) . $foto_nombre);
-
-            return 'http://127.0.0.1:8000/' . $nombrefinal;
-        }
-        return null;
-    }
 
     public function editar($id)
     {

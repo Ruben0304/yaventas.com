@@ -136,63 +136,23 @@
                                             <div class="col-md-4">
                                                 <div class="form-group mb-3">
                                                     <label>Imagen Principal</label>
-                                                    <input type="file" class="form-control" wire:model="foto">
+                                                    <input type="text" class="form-control" wire:model="foto">
                                                     @error('foto') <span class="text-danger">{{ $message }}</span> @enderror
-                                                    @if($modo === 'editar' && !$foto)
-                                                        <img src="{{ asset('storage/'.$producto->foto) }}" width="120" alt="Imagen principal">
-                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group mb-3">
                                                     <label>Imagen 2 (Opcional)</label>
-                                                    <input type="file" class="form-control" wire:model="foto2">
-                                                    @if($modo === 'editar' && !$foto2 && $producto->foto_2)
-                                                        <img src="{{ asset('storage/'.$producto->foto_2) }}" width="120" alt="Imagen 2">
-                                                    @endif
+                                                    <input type="text" class="form-control" wire:model="foto2">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group mb-3">
                                                     <label>Imagen 3 (Opcional)</label>
-                                                    <input type="file" class="form-control" wire:model="foto3">
-                                                    @if($modo === 'editar' && !$foto3 && $producto->foto_3)
-                                                        <img src="{{ asset('storage/'.$producto->foto_3) }}" width="120" alt="Imagen 3">
-                                                    @endif
+                                                    <input type="text" class="form-control" wire:model="foto3">
                                                 </div>
                                             </div>
 
-                                            @if($modo === 'editar')
-                                                <div class="col-12 mt-4">
-                                                    <h4>Oferta por tiempo limitado (Opcional)</h4>
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <div class="form-group mb-3">
-                                                                <label>Fecha fin de oferta</label>
-                                                                <input type="date" class="form-control" wire:model="duraciono">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-group mb-3">
-                                                                <label>Precio CUP oferta</label>
-                                                                <input type="number" class="form-control" wire:model="preciocupo">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-group mb-3">
-                                                                <label>Precio USD oferta</label>
-                                                                <input type="number" class="form-control" wire:model="preciousdo">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-group mb-3">
-                                                                <label>Motivo de la oferta</label>
-                                                                <input type="text" class="form-control" wire:model="motivo">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
 
                                             <div class="col-12 mt-4">
                                                 <button type="submit" class="btn btn-primary">
