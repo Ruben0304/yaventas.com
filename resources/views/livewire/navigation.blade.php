@@ -20,7 +20,7 @@
                     <div class="header-info header-info-right">
                         <ul>
                             @auth
-                                <li><i class="fi-rs-key"></i><a href="{{ route('home') }}">{{ Auth::user()->name }} </a>
+                                <li><i class="fi-rs-key"></i><a href="{{ route('home') }}">{{ Auth::user()->name }} </a>/
                                     <form action="{{ route('logout') }}" method="post">
                                         @csrf
                                         <a href=""
@@ -42,7 +42,7 @@
         <div class="container mx-auto px-20"> <!-- Increased padding from px-4 to px-8 -->
             <div class="header-wrap">
                 <div class="logo logo-width-1">
-                    <a href="{{ route('home') }}"><img src="img/logo/1.png" alt="logo" width="100px"></a>
+                    <a href="{{ route('home') }}"><img src="{{asset('img/logo/1.png')}}" alt="logo" width="100px"></a>
                 </div>
                 <div class="header-right">
                     <div class="search-style-1">

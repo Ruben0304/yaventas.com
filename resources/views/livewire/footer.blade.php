@@ -1,4 +1,4 @@
-<div wire:id="footer" class="w-full" >
+<div wire:id="footer">
     <footer class="main">
         <section class="newsletter p-30 text-white wow fadeIn animated">
             <div class="container">
@@ -6,7 +6,8 @@
                     <div class="col-lg-7 mb-md-3 mb-lg-0">
                         <div class="row align-items-center">
                             <div class="col flex-horizontal-center">
-                                <img class="icon-email" src="assets/imgs/theme/icons/icon-email.svg" alt="icono email">
+
+                                <img class="icon-email" src="{{asset('assets/imgs/theme/icons/icon-email.svg')}}" alt="icono email">
                                 <h4 class="font-size-20 mb-0 ml-3">¡Suscríbete a nuestro boletín!</h4>
                             </div>
                             <div class="col my-4 my-md-0 des">
@@ -31,7 +32,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="widget-about font-md mb-md-5 mb-lg-0">
                             <div class="logo logo-width-1 wow fadeIn animated">
-                                <a href="{{route('home')}}"><img src="img/logo/1.png" alt="logo"></a>
+                                <a href="{{route('home')}}"><img src="{{asset('img/logo/1.png')}}" alt="logo"></a>
                             </div>
                             <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">Contacto</h5>
                             <p class="wow fadeIn animated">

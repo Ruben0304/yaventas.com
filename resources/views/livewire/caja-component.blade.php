@@ -41,23 +41,27 @@
                             </div>
                             <div class="form-group">
                                 <div class="custom_select">
-                                    <select class="form-control select-active" wire:model="municipio" required>
+                                    <select
+                                        wire:model="municipio"
+                                        wire:model.defer="municipio"
+                                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                                        required>
                                         <option value="">Municipio *</option>
                                         @foreach ($municipios as $mun)
                                             <option value="{{ $mun }}">{{ $mun }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                @error('municipio') <span class="error text-danger">{{ $message }}</span> @enderror
+                                @error('municipio') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
                             </div>
                             <div class="form-group">
                                 <input type="text" wire:model.defer="telefono" placeholder="Teléfono (Se le confirmará a este teléfono antes del envío) *" required>
                                 @error('telefono') <span class="error text-danger">{{ $message }}</span> @enderror
                             </div>
-                            <div class="form-group">
-                                <input type="text" wire:model="location" placeholder="Ubicación (coordenadas) *" required>
-                                @error('location') <span class="error text-danger">{{ $message }}</span> @enderror
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <input type="text" wire:model="location" placeholder="Ubicación (coordenadas) *" required>--}}
+{{--                                @error('location') <span class="error text-danger">{{ $message }}</span> @enderror--}}
+{{--                            </div>--}}
                             <div class="mb-20">
                                 <h5>Escribe aquí lo que desees (opcional)</h5>
                             </div>
@@ -70,11 +74,9 @@
                                 </div>
                                 <div class="payment_option">
                                     <div class="custome-radio">
-                                        <input class="form-check-input" type="radio" wire:model.defer="metodopago" id="exampleRadios3" value="efectivo">
+                                        <input class="form-check-input" type="radio" selected wire:model.defer="metodopago" id="exampleRadios3" value="efectivo">
                                         <label class="form-check-label" for="exampleRadios3">Efectivo</label>
 
-                                        <input class="form-check-input" type="radio" wire:model.defer="metodopago" id="exampleRadios4" value="qvapay">
-                                        <label class="form-check-label" for="exampleRadios4">Qvapay</label>
                                     </div>
                                 </div>
                                 @error('metodopago') <span class="error text-danger">{{ $message }}</span> @enderror
@@ -99,7 +101,7 @@
                                     @foreach ($carrito as $item)
                                         <tr>
                                             <td class="image product-thumbnail">
-                                                <img src="{{ $item->producto->foto }}" alt="{{ $item->producto->nombre }}">
+                                                <img src=" {{$item->producto->foto}} " alt="{{ $item->producto->nombre }}">
                                             </td>
                                             <td>
                                                 <h5>{{ $item->producto->nombre }}</h5>

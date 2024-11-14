@@ -30,7 +30,6 @@
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
-                                            <th>Imagen</th>
                                             <th>Nombre</th>
                                             <th>Teléfono</th>
                                             <th>Dirección</th>
@@ -42,12 +41,6 @@
                                         <tbody>
                                         @foreach ($vendedores as $vendedor)
                                             <tr>
-                                                <td class="align-middle" style="width: 100px;">
-                                                    <img src="{{ asset($vendedor->foto) }}"
-                                                         alt="{{ $vendedor->nombre }}"
-                                                         class="img-thumbnail"
-                                                         style="width: 80px; height: 80px; object-fit: cover;">
-                                                </td>
                                                 <td class="align-middle">{{ $vendedor->nombre }}</td>
                                                 <td class="align-middle">{{ $vendedor->telefono }}</td>
                                                 <td class="align-middle">{{ $vendedor->direccion }}</td>
@@ -122,19 +115,6 @@
                                     @error('descripcion') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Foto</label>
-                                    <input type="file" class="form-control" wire:model="foto">
-                                    @error('foto') <span class="text-danger">{{ $message }}</span> @enderror
-
-                                    <div class="mt-2">
-                                        @if ($foto)
-                                            <img src="{{ $foto->temporaryUrl() }}" class="img-thumbnail" style="width: 200px">
-                                        @elseif ($tempFoto)
-                                            <img src="{{ asset($tempFoto) }}" class="img-thumbnail" style="width: 200px">
-                                        @endif
-                                    </div>
-                                </div>
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" wire:click="$set('showModal', false)">
@@ -179,7 +159,7 @@
                                     @forelse($selectedVendor->productos as $producto)
                                         <tr>
                                             <td>
-                                                <img src="{{ asset($producto->foto) }}"
+                                                <img src="{{ $producto->foto }}"
                                                      alt="{{ $producto->nombre }}"
                                                      class="img-thumbnail"
                                                      style="width: 60px; height: 60px; object-fit: cover;">
@@ -208,6 +188,10 @@
                                     @endforelse
                                     </tbody>
                                 </table>
+                            </div>
+                            <!-- Agregar links de paginación -->
+                            <div class="mt-4">
+                                {{ $productos->links() }}
                             </div>
                         </div>
                         <div class="modal-footer">

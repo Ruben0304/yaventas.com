@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Producto;
 use App\Models\Vendedore;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
@@ -10,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ListadoVendedores extends Component
 {
-    use WithPagination, WithFileUploads;
+    use WithPagination;
 
     public $search = '';
     public $selectedVendor = null;
@@ -24,7 +26,8 @@ class ListadoVendedores extends Component
     public $telefono;
     public $descripcion;
     public $foto;
-    public $tempFoto;
+
+
     public $isEditing = false;
 
     protected $rules = [
@@ -62,7 +65,6 @@ class ListadoVendedores extends Component
         $this->direccion = $vendedor->direccion;
         $this->telefono = $vendedor->telefono;
         $this->descripcion = $vendedor->descripcion;
-        $this->tempFoto = $vendedor->foto;
 
         $this->showModal = true;
     }
@@ -79,14 +81,6 @@ class ListadoVendedores extends Component
             'id_user' => auth()->id(),
         ];
 
-        if ($this->foto) {
-            $fotoPath = $this->foto->store('vendors', 'public');
-            $data['foto'] = 'storage/' . $fotoPath;
-
-            if ($this->isEditing && $this->tempFoto) {
-                Storage::disk('public')->delete(str_replace('storage/', '', $this->tempFoto));
-            }
-        }
 
         if ($this->isEditing) {
             $vendedor = Vendedore::find($this->vendorId);
@@ -102,14 +96,12 @@ class ListadoVendedores extends Component
     public function delete($id)
     {
         $vendedor = Vendedore::find($id);
-        if ($vendedor->foto) {
-            Storage::disk('public')->delete(str_replace('storage/', '', $vendedor->foto));
-        }
         $vendedor->delete();
     }
 
     public function showVendorProducts($vendorId)
     {
+
         $this->selectedVendor = Vendedore::with(['productos' => function($query) {
             $query->orderBy('created_at', 'desc');
         }])->find($vendorId);
@@ -129,8 +121,6 @@ class ListadoVendedores extends Component
         $this->direccion = '';
         $this->telefono = '';
         $this->descripcion = '';
-        $this->foto = null;
-        $this->tempFoto = null;
         $this->resetErrorBag();
         $this->resetValidation();
     }
@@ -144,9 +134,14 @@ class ListadoVendedores extends Component
         })
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+        $productos = null;
+        if ($this->selectedVendor != null)
+            $productos = $this->selectedVendor->productos()->paginate(5) ?? null;
+
 
         return view('livewire.admin.listado-vendedores', [
-            'vendedores' => $vendedores
+            'vendedores' => $vendedores,
+            'productos' => $productos
         ]);
     }
 }
