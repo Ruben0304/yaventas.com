@@ -4,3 +4,10 @@
         Generar PDF
     </button>
 </div>
+@if(session('pdfUrl'))
+    <div class="mt-4">
+        <a href="{{ session('pdfUrl') }}" class="btn btn-primary" target="_blank">
+            Descargar Comprobante de Compra (PDF)
+        </a>
+    </div>
+@endif

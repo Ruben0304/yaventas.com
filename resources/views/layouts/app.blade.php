@@ -25,8 +25,6 @@
 
 </head>
 
-<body style="">
-
 
 <body class="flex flex-col min-h-screen ">
 <livewire:navigation />
@@ -42,7 +40,6 @@
 </main>
 
 <livewire:footer  />
-
 
 @livewireScripts
 

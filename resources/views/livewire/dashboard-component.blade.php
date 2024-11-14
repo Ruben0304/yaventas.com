@@ -75,10 +75,9 @@
                                                 <h5 class="mb-0">Tus pedidos</h5>
                                             </div>
                                             <div class="card-body">
-                                                <section class="pedidos" style="height: 400px; ">
-                                                    <iframe src="http://127.0.0.1:8000/tabla" frameborder="0"
-                                                            width="100%" height="100%"></iframe>
-                                                </section>
+
+                                                   <livewire:admin.admin-pedidos/>
+
                                             </div>
                                         </div>
                                     </div>

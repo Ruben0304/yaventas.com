@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use Barryvdh\DomPDF\Facade\Pdf;  // Asegúrate de usar este namespace
 use Livewire\Component;
-
 
 class GenerarPdf extends Component
 {
@@ -14,7 +14,7 @@ class GenerarPdf extends Component
 
     public function generarPDF()
     {
-        $pdf = PDF::loadView('livewire.pdf-template', [
+        $pdf = Pdf::loadView('livewire.pdf-template', [
             'titulo' => 'Mi primer PDF con Livewire',
             'fecha' => now()->format('d/m/Y'),
             'contenido' => 'Este es un PDF de prueba'

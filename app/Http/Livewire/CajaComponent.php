@@ -7,10 +7,12 @@ use App\Models\Orden_detalle;
 use App\Models\Ordene;
 use App\Models\Producto;
 use App\Models\Whatsapp;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class CajaComponent extends Component
@@ -81,8 +83,10 @@ class CajaComponent extends Component
         $this->validate();
 
         if ($this->metodopago == 'efectivo') {
-            $this->createOrder();
-            return redirect()->route('pedidos')->with('success', '¡Felicidades! Tu compra se ha realizado con éxito. Pronto nos pondremos en contacto contigo. Te agradecemos tu preferencia. 😊');
+            $pdfUrl = $this->createOrder();
+            return redirect()->route('pedidos')
+                ->with('success', '¡Felicidades! Tu compra se ha realizado con éxito. Pronto nos pondremos en contacto contigo. Te agradecemos tu preferencia. 😊')
+                ->with('pdfUrl', $pdfUrl);
         } elseif ($this->metodopago == 'qvapay') {
             $response = $this->createQvapayInvoice();
             if (isset($response['signedUrl'])) {
@@ -125,6 +129,21 @@ class CajaComponent extends Component
             $order_detail->id_orden = $order->id;
             $order_detail->save();
         }
+
+        // Generar PDF
+        $orderDetails = Orden_detalle::with('producto')
+            ->where('id_orden', $order->id)
+            ->get();
+
+        $pdf = Pdf::loadView('livewire.pdf-template', [
+            'order' => $order,
+            'orderDetails' => $orderDetails
+        ]);
+
+        // Guardar el PDF
+        $pdfPath = 'comprobantes/orden-' . $order->id . '.pdf';
+        Storage::put('public/' . $pdfPath, $pdf->output());
+
         $chat_ids = [883686571, 1037612237, 5965028260];
         foreach ($chat_ids as $chat_id) {
             $token = "6076481343:AAF5RcA16h2JlRpLKwiVvG3XidaPvaXzKtE";
@@ -183,6 +202,8 @@ class CajaComponent extends Component
         }
         Carrito::where('id_user', Auth::user()->id)->delete();
         DB::commit();
+
+        return Storage::url($pdfPath);
     }
 
     private function createQvapayInvoice()

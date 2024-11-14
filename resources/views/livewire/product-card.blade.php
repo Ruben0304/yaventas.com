@@ -43,7 +43,7 @@
                 </div>
 
                     <!-- Cambia la clase del botón de agregar al carrito -->
-                    <button wire:click="agregarAlCarrito()" style="background-color: #FF6E11"
+                    <button wire:click="agregarAlCarrito()" style="background-color: #ff6e11"
                             class="text-white w-10 h-10 rounded-full flex items-center justify-center transition-transform duration-300 transform hover:scale-110 hover:bg-blue-600">
                         <i class="fi-rs-shopping-bag-add"></i> <span class="sr-only">Agregar al carrito</span>
                     </button>
