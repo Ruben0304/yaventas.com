@@ -3,7 +3,7 @@
         <div class="page-header breadcrumb-wrap">
             <div class="container">
                 <div class="breadcrumb">
-                    <a href="index.html" rel="nofollow">Home</a>
+                    <a href="{{route('home')}}" rel="nofollow">Home</a>
                     <span>Vendedores</span>
                 </div>
             </div>
@@ -15,9 +15,14 @@
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h3 class="card-title">Listado de Vendedores</h3>
-                                <div class="input-group" style="width: 300px;">
-                                    <input wire:model.debounce.300ms="search" type="text" class="form-control"
-                                           placeholder="Buscar por nombre, teléfono o dirección...">
+                                <div class="d-flex gap-3">
+                                    <div class="input-group" style="width: 300px;">
+                                        <input wire:model.debounce.300ms="search" type="text" class="form-control"
+                                               placeholder="Buscar por nombre, teléfono o dirección...">
+                                    </div>
+                                    <button wire:click="create" class="btn btn-primary">
+                                        Nuevo Vendedor
+                                    </button>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -31,7 +36,7 @@
                                             <th>Dirección</th>
                                             <th>Descripción</th>
                                             <th>Productos</th>
-                                            <th>Detalles</th>
+                                            <th>Acciones</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -54,40 +59,16 @@
                                                     </button>
                                                 </td>
                                                 <td class="align-middle">
-                                                    <button type="button"
-                                                            class="btn btn-sm btn-info"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#vendedorModal{{ $vendedor->id }}">
-                                                        Ver Detalles
-                                                    </button>
-
-                                                    <!-- Modal de Detalles del Vendedor -->
-                                                    <div class="modal fade" id="vendedorModal{{ $vendedor->id }}" tabindex="-1" aria-hidden="true">
-                                                        <div class="modal-dialog modal-lg">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title">Detalles del Vendedor</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="row">
-                                                                        <div class="col-md-4">
-                                                                            <img src="{{ asset($vendedor->foto) }}"
-                                                                                 alt="{{ $vendedor->nombre }}"
-                                                                                 class="img-fluid rounded">
-                                                                        </div>
-                                                                        <div class="col-md-8">
-                                                                            <h6>Información del Vendedor</h6>
-                                                                            <p><strong>Nombre:</strong> {{ $vendedor->nombre }}</p>
-                                                                            <p><strong>Teléfono:</strong> {{ $vendedor->telefono }}</p>
-                                                                            <p><strong>Dirección:</strong> {{ $vendedor->direccion }}</p>
-                                                                            <p><strong>Descripción:</strong> {{ $vendedor->descripcion }}</p>
-                                                                            <p><strong>Fecha de registro:</strong> {{ $vendedor->created_at->format('d/m/Y H:i') }}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                    <div class="btn-group">
+                                                        <button wire:click="edit({{ $vendedor->id }})"
+                                                                class="btn btn-sm btn-info me-2">
+                                                            Editar
+                                                        </button>
+                                                        <button wire:click="delete({{ $vendedor->id }})"
+                                                                class="btn btn-sm btn-danger"
+                                                                onclick="return confirm('¿Estás seguro de eliminar este vendedor?')">
+                                                            Eliminar
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -106,9 +87,74 @@
             </div>
         </section>
 
-        <!-- Modal de Productos del Vendedor -->
-        @if($selectedVendor)
-            <div class="modal fade show" id="vendorProductsModal" style="display: block;" aria-modal="true" role="dialog">
+        <!-- Modal de Crear/Editar -->
+        @if($showModal)
+            <div class="modal fade show" style="display: block;" aria-modal="true" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ $isEditing ? 'Editar' : 'Crear' }} Vendedor</h5>
+                            <button type="button" class="btn-close" wire:click="$set('showModal', false)"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form wire:submit.prevent="save">
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" wire:model="nombre">
+                                    @error('nombre') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Teléfono</label>
+                                    <input type="text" class="form-control" wire:model="telefono">
+                                    @error('telefono') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Dirección</label>
+                                    <input type="text" class="form-control" wire:model="direccion">
+                                    @error('direccion') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Descripción</label>
+                                    <textarea class="form-control" wire:model="descripcion" rows="3"></textarea>
+                                    @error('descripcion') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Foto</label>
+                                    <input type="file" class="form-control" wire:model="foto">
+                                    @error('foto') <span class="text-danger">{{ $message }}</span> @enderror
+
+                                    <div class="mt-2">
+                                        @if ($foto)
+                                            <img src="{{ $foto->temporaryUrl() }}" class="img-thumbnail" style="width: 200px">
+                                        @elseif ($tempFoto)
+                                            <img src="{{ asset($tempFoto) }}" class="img-thumbnail" style="width: 200px">
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" wire:click="$set('showModal', false)">
+                                        Cancelar
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ $isEditing ? 'Actualizar' : 'Guardar' }}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-backdrop fade show"></div>
+        @endif
+
+        <!-- Modal de Productos -->
+        @if($showProductsModal && $selectedVendor)
+            <div class="modal fade show" style="display: block;" aria-modal="true" role="dialog">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -163,6 +209,11 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" wire:click="closeVendorModal">
+                                Cerrar
+                            </button>
                         </div>
                     </div>
                 </div>

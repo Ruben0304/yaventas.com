@@ -1,4 +1,4 @@
-<div wire:id="footer">
+<div wire:id="footer" class="w-full" >
     <footer class="main">
         <section class="newsletter p-30 text-white wow fadeIn animated">
             <div class="container">
@@ -31,7 +31,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="widget-about font-md mb-md-5 mb-lg-0">
                             <div class="logo logo-width-1 wow fadeIn animated">
-                                <a href="{{route('home')}}"><img src="assets/imgs/logo/logo.png" alt="logo"></a>
+                                <a href="{{route('home')}}"><img src="img/logo/1.png" alt="logo"></a>
                             </div>
                             <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">Contacto</h5>
                             <p class="wow fadeIn animated">
@@ -43,19 +43,6 @@
                             <p class="wow fadeIn animated">
                                 <strong>Correo: </strong>contacto@yunioramerica.com
                             </p>
-                            <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">Síguenos en Redes</h5>
-                            <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
-                                <a href="#" class="hover-up"><img src="assets/imgs/theme/icons/icon-facebook.svg"
-                                                                  alt="facebook"></a>
-                                <a href="#" class="hover-up"><img src="assets/imgs/theme/icons/icon-twitter.svg"
-                                                                  alt="twitter"></a>
-                                <a href="#" class="hover-up"><img src="assets/imgs/theme/icons/icon-instagram.svg"
-                                                                  alt="instagram"></a>
-                                <a href="#" class="hover-up"><img src="assets/imgs/theme/icons/icon-pinterest.svg"
-                                                                  alt="pinterest"></a>
-                                <a href="#" class="hover-up"><img src="assets/imgs/theme/icons/icon-youtube.svg"
-                                                                  alt="youtube"></a>
-                            </div>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-3">
@@ -77,26 +64,6 @@
                             <li><a href="#" class="hover-up">Seguir Pedido</a></li>
                             <li><a href="#" class="hover-up">Mis Pedidos</a></li>
                         </ul>
-                    </div>
-                    <div class="col-lg-4 mob-center">
-                        <h5 class="widget-title wow fadeIn animated">Descarga Nuestra App</h5>
-                        <div class="row">
-                            <div class="col-md-8 col-lg-12">
-                                <p class="wow fadeIn animated">Disponible en App Store y Google Play</p>
-                                <div class="download-app wow fadeIn animated mob-app">
-                                    <a href="#" class="hover-up mb-sm-4 mb-lg-0"><img class="active"
-                                                                                      src="assets/imgs/theme/app-store.jpg"
-                                                                                      alt="app store"></a>
-                                    <a href="#" class="hover-up"><img src="assets/imgs/theme/google-play.jpg"
-                                                                      alt="google play"></a>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
-                                <p class="mb-20 wow fadeIn animated">Métodos de Pago Seguros</p>
-                                <img class="wow fadeIn animated" src="assets/imgs/theme/payment-method.png"
-                                     alt="métodos de pago">
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

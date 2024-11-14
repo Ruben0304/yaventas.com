@@ -1,6 +1,6 @@
-<header class="header-area header-style-1 header-height-2">
+<header class="header-area header-style-1 header-height-2 z-10 w-full">
     <div class="header-top header-top-ptb-1 d-none d-lg-block">
-        <div class="container">
+        <div class="container mx-auto px-8"> <!-- Increased padding from px-4 to px-8 -->
             <div class="row align-items-center">
                 <div class="col-xl-3 col-lg-4">
                     <div class="header-info">
@@ -39,7 +39,7 @@
     </div>
 
     <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
-        <div class="container">
+        <div class="container mx-auto px-20"> <!-- Increased padding from px-4 to px-8 -->
             <div class="header-wrap">
                 <div class="logo logo-width-1">
                     <a href="{{ route('home') }}"><img src="img/logo/1.png" alt="logo" width="100px"></a>
@@ -64,7 +64,7 @@
     </div>
 
     <div class="header-bottom header-bottom-bg-color sticky-bar" style="padding-top: 15px; backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.2); border-radius: 10px;">
-        <div class="container">
+        <div class="container mx-auto px-20"> <!-- Increased padding from px-4 to px-8 -->
             <div class="header-wrap header-space-between position-relative" style="display: flex; justify-content: space-between;">
                 <div class="logo logo-width-1 d-block d-lg-none">
                     <a href="{{ route('home') }}"><img src="img/logo/1.png" alt="logo"></a>
@@ -99,7 +99,6 @@
                                                 Administrar <i class="fi-rs-angle-down"></i>
                                             </a>
                                             <ul class="sub-menu" style="position: absolute; top: 100%; left: 0; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                                                <li><a class="{{ $activeMenu === 'admin.crear.productos' ? 'active' : '' }}" wire:click="setActiveMenu('admin.crear.productos')" href="{{ route('admin.crear.productos') }}">Agregar Producto</a></li>
                                                 <li><a class="{{ $activeMenu === 'admin.productos' ? 'active' : '' }}" wire:click="setActiveMenu('admin.productos')" href="{{ route('admin.productos') }}">Productos</a></li>
                                                 <li><a class="{{ $activeMenu === 'admin.categorias' ? 'active' : '' }}" wire:click="setActiveMenu('admin.categorias')" href="{{ route('admin.categorias') }}">Categorias</a></li>
                                                 <li><a class="{{ $activeMenu === 'admin.listado.usuarios' ? 'active' : '' }}" wire:click="setActiveMenu('admin.listado.usuarios')" href="{{ route('admin.listado.usuarios') }}">Usuarios</a></li>
@@ -123,5 +122,4 @@
             </div>
         </div>
     </div>
-
 </header>

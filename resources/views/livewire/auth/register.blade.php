@@ -1,4 +1,4 @@
-<div style="background: linear-gradient(135deg, #f6f8fc 0%, #e9edf5 100%); padding: 3rem 1rem; min-height: 100vh; display: flex; justify-content: center; align-items: center;">
+<div style=" padding: 3rem 1rem; min-height: 100vh; display: flex; justify-content: center; align-items: center;">
     <div style="background: white; max-width: 32rem; width: 100%; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); padding: 2.5rem;">
         <h2 style="text-align: center; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; color: #1a1f36;">Crear Cuenta</h2>
         <p style="text-align: center; color: #6b7280; margin-bottom: 2rem; font-size: 0.95rem;">Únete a nuestra comunidad</p>

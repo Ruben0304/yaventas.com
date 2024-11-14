@@ -61,6 +61,8 @@ Route::post('calculate-distance', [MapaComponent::class, 'calcular'])->name('cal
 Route::get('mapa', MapaComponent::class)->name('mapa');
 
 
+Route::get('/import-products/{jsonPath?}', [\App\Http\Controllers\ProductImport::class, 'importProducts']);
+
 //Admin routes
 Route::middleware(['auth', 'authadmin', 'verified'])->group(function () {
     Route::get('/admin/productos', AdminProductosComponent::class)->name('admin.productos');
