@@ -28,11 +28,11 @@
                                                     class="fi-rs-shopping-bag mr-10"></i>Ordenes</a>
                                         </li>
 
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address"
-                                               role="tab" aria-controls="address" aria-selected="true"><i
-                                                    class="fi-rs-marker mr-10"></i>Mi direccion</a>
-                                        </li>
+{{--                                        <li class="nav-item">--}}
+{{--                                            <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address"--}}
+{{--                                               role="tab" aria-controls="address" aria-selected="true"><i--}}
+{{--                                                    class="fi-rs-marker mr-10"></i>Mi direccion</a>--}}
+{{--                                        </li>--}}
                                         <li class="nav-item">
                                             <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab"
                                                href="#account-detail" role="tab" aria-controls="account-detail"
@@ -141,27 +141,27 @@
                                         </div>
                                     </div>
 
-                                    <div class="tab-pane fade" id="address" role="tabpanel"
-                                         aria-labelledby="address-tab">
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="card mb-3 mb-lg-0">
-                                                    <div class="card-header">
-                                                        <h5 class="mb-0">Dirección</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <address>
-                                                            {{ $ordenes->direccion ?? 'Ninguna todavia' }}
-                                                            <br>{{ $ordenes->municipio ?? '' }}
-                                                        </address>
-                                                        <p>{{ $ordenes->provincia ?? '' }}</p>
-                                                        {{-- <a href="#" class="btn-small">Edit</a> --}}
-                                                    </div>
-                                                </div>
-                                            </div>
+{{--                                    <div class="tab-pane fade" id="address" role="tabpanel"--}}
+{{--                                         aria-labelledby="address-tab">--}}
+{{--                                        <div class="row">--}}
+{{--                                            <div class="col-lg-6">--}}
+{{--                                                <div class="card mb-3 mb-lg-0">--}}
+{{--                                                    <div class="card-header">--}}
+{{--                                                        <h5 class="mb-0">Dirección</h5>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="card-body">--}}
+{{--                                                        <address>--}}
+{{--                                                            {{ $ordenes->direccion ?? 'Ninguna todavia' }}--}}
+{{--                                                            <br>{{ $ordenes->municipio ?? '' }}--}}
+{{--                                                        </address>--}}
+{{--                                                        <p>{{ $ordenes->provincia ?? '' }}</p>--}}
+{{--                                                        --}}{{-- <a href="#" class="btn-small">Edit</a> --}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
 
-                                        </div>
-                                    </div>
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <div class="tab-pane fade" id="account-detail" role="tabpanel"
                                          aria-labelledby="account-detail-tab">
                                         <div class="card">
